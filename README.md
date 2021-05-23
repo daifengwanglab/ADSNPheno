@@ -99,14 +99,14 @@ Please note that we utilized Bioconductor packages, such as: GEOquery, hgu133a.d
 Next, we mapped those probes of microarray data to genes, averaging values that mapped to the same gene Entrez ID.  We removed probes that did not map to any known genes.  Please note that some helpful tools for obtaining the status of certain genes (such as updated gene names or status on whether they are withdrawn or discontinued) is: https://www.genenames.org/tools/multi-symbol-checker/.
 
 
-In addition, we consulted the aliases2entrez package to retrieve EntrezID information on the genes.
+In addition, we consulted the aliases2entrez package to retrieve EntrezID information on the genes.  To assist you with your gene set, please note that we have tried to build an extensive resource on some of the Entrez IDs for various genes, which we have stored in this csv: [infoDFMappingsGeneSymbolAndID.csv]("https://github.com/daifengwanglab/ADSNPheno/tree/master/data/entrezMappingInfo") (Please see: data > entrezMappingInfo > infoDFMappingsGeneSymbolAndID.csv). 
 
 
 Ultimately, after pre-processing, our final dataset for the Hippocampus had 13,073 unique genes for these 31 samples.
 
-
+`{r} print("hi")`
 
 ```{r}
-print(hi)
+print("hi")
 
 ```
