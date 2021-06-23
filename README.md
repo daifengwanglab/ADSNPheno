@@ -1,8 +1,6 @@
 README
 ================
 
-#`{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)`
-
 ADSNPheno: A computational pipeline of multi-omics analysis to predict gene regulatory networks from disease variants to phenotypes with applications in Alzheimer’s disease and SARS-CoV-2
 ===========================================================================================================================================================================================
 
@@ -47,12 +45,8 @@ Please note that this analysis is based on R 4.0 and Python. You will only need 
 
 ## Software Requirements
 
-
-
-This is an R Markdown format used for publishing markdown documents to
-GitHub. When you click the **Knit** button all R code chunks are run and
-a markdown file (.md) suitable for publishing to GitHub is generated.
-
+Please note that you will need to have R installed as well as Python (Version 3.8.5 or above).  In Python, we will be installing packages such as numpy, pandas, math, datetime, sklearn, and fsspec. 
+Please note that you can find more information on R packages that are needed under code $\rightarrow$ setupScripts $\rightarrow$ packagesNeeded.R.  Please note that many of the R packages do require Bioconductor. 
 
 
 ## Support
