@@ -3,6 +3,12 @@ README
 
 ADSNPheno: A computational pipeline of multi-omics analysis to predict gene regulatory networks from disease variants to phenotypes with applications in Alzheimer’s disease and SARS-CoV-2
 ===========================================================================================================================================================================================
+Paper
+-------
+
+Please note that this code corresponds to this current pre-print, available on Biorxiv: [Integrative analysis of multi-omics reveals gene regulatory networks across brain regions from risk variants to phenotypes of Alzheimer's disease and Covid-19](https://www.biorxiv.org/content/10.1101/2021.06.21.449165v1.full.pdf+html)
+by Saniya Khullar and Daifeng Wang, Ph.D.
+
 
 Summary
 -------
@@ -62,7 +68,15 @@ Please visit our [lab website](https://daifengwanglab.org/) at the University of
 
 This demo applies our general, open-source computational pipeline, **ADSNPheno**, in the context of Alzheimer's disease (AD).  Here, we aim to reveal underlying gene regulatory mechanisms of AD risk variants to different AD phenotypes. Particularly, ADSNPheno first identifies the gene co-expression modules for various AD phenotypes via clustering gene co-expression networks. ADSNPheno further predicts the transcription factors (TFs) that significantly regulate the genes in each module, as well as the AD SNPs interrupting the TF binding sites on the regulatory elements. Finally, ADSNPheno constructs a full gene regulatory network linking SNPs, TFs, and regulatory elements to target genes for each phenotype. This network thus provides mechanistic insights of gene regulation from disease risk variants to the phenotype in AD.
 
-Please note that we provide an example application of ADNSPheno to the Lateral Temporal Lobe gene expression data set [GSE159699](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699). 
+Please note that we provide an example application of ADNSPheno to the Lateral Temporal Lobe gene expression data set [GSE159699](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699).  For the demo, we randomly selected 200 genes from the gene expression data, and around 1,222 rows of Enhancer epigenomics data for the Lateral Temporal Lobe. 
+
+
+Tutorial
+-------
+
+Please note that a detailed Tutorial of this code will be available here: [ADSNPheno Book](https://saniyakhullar.github.io/SNPheno/).
+
+Please let us know if you have any questions!  Thank you!
 
 
 ```
