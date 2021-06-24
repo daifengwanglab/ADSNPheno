@@ -43,7 +43,7 @@ Please note that this integrative analysis is based on R 4.0 and Python. You wil
 ## Software Requirements
 
 Please note that you will need to have R installed as well as Python (Version 3.8.5 or above).  In Python, we will be installing packages such as numpy, pandas, math, datetime, sklearn, and fsspec. 
-Please note that you can find more information on R packages that are needed under code $-->$ setupScripts $-->$ packagesNeeded.R.  Please note that many of the R packages do require Bioconductor. 
+Please note that you can find more information on R packages that are needed under code --> setupScripts --> packagesNeeded.R.  Please note that many of the R packages do require Bioconductor. 
 
 
 ## Support
@@ -63,7 +63,7 @@ We provide a demo of our integrative analysis to the Lateral Temporal Lobe (LTL)
 
 ## Code for General Usage
 
-In addition, all codes for our integrative analysis for general usage is provided in a single file [adsnphenoCodesToRun.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/adsnphenoCodesToRun.R). Also, we provide the codes for each step of our analysis as follows (where you can edit the parameters directly within the file and then run the code below):
+In addition, all codes for our integrative analysis for general usage is provided in a single file [adsnphenoCodesToRun.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/adsnphenoCodesToRun.R). Also, we provide the codes for each step of our analysis as follows (where you can edit the parameters directly within the file itself, at the top, and then run the respective code below in that file):
 
 *  [Identifying gene co-expression modules and modular enrichments](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Part1_Identifying%20Gene%20Co-Expression%20Modules%20and%20Module%20Enrichments)
 *  [Predicting gene regulatory network linking TFs, regulatory elements to target genes](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Part2_PredictingGeneRegulatoryNetworksLinkingTFsAndRegElementsToTarget%20Genes)
