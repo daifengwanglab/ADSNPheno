@@ -29,8 +29,8 @@ outputPathNameADSNPhenoOutputs = paste0("F://organizedAlzheimers//ADSNPhenoOutpu
 
 
 
-#getwd() # please note this is our current working directory
-#setwd(codeFolder) # please set this folder as working directory
+getwd() # please note this is our current working directory
+setwd(codeFolder) # please set this folder as working directory
 
 
 disease = "Alzheimers"
@@ -38,14 +38,17 @@ diseasePetName = "AD" # or diseaseNickName
 
 tissueName = "Brain"
 bodyRegion = "MiniFinalDemo_LTL1" 
+setwd(dataFolder) # please set this folder as working directory
+getwd()
 inputGeneExpressionDataFilePath = paste0(dataFolder, "//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv") #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
-
+#inputGeneExpressionDataFilePath = paste0(dataFolder, "F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
+                                                                                  
 useTFsFoundByADSNPheno = TRUE # please note that by default we use  combined list of Lambert and Jaspar TFs.
 filePathOfTFsToUse = NULL # please note that if this is NULL, we will use combined list of Lambert and Jaspar TFs.  Else, please specify csv filepath of TFs, where the TFs are in 1 column with the title called "tfName", with names that are found exactly in gene expression dataset
 
 log2transformInputData = "TRUE" # (should we apply a log2(x+1) transform on data
 scaleInputData = "FALSE"  # should we apply a scale() on data
-phenotypesFilePath = paste0(dataFolder, "phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv") 
+phenotypesFilePath = paste0(dataFolder, "//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv") 
 ########################################################################################################################
 ### Weighted Gene Co-Expression Network Analysis (WGCNA) with K-Means:
 # Step 2:  How to construct co-expression network and modules (WGCNA and K-means too).  Define parameters
@@ -90,47 +93,20 @@ meg = 0 # Minimum number of genes exchanged: if before the number of iterations,
 ### PLEASE RUN: 
 
 ########################################################### running other things:
-generalDataForPipeline = paste0(dataFolder, "generalDataForPipeline.RData")
-load(generalDataForPipeline)
-pathForPythonCode = paste0(codeFolder, "setupScripts//BuildingFullAndSubNetworksPythonCode.py")
-#filePathDerivationsSourceCode = paste0(codeFolder, "setupScripts//filePathDerivations.R")
-packagesNeededSourceCode = paste0(codeFolder, "setupScripts//packagesNeeded.R")
-functionsNeededSourceCode = paste0(codeFolder, "setupScripts//functionsNeeded.R")
-#userInputsSourceCode = paste0(codeFolder, "pythonCode//BuildingFullAndSubNetworksPythonCode.py")
-#generalDataForPipeline = paste0(dataFolder, "generalDataForPipeline.RData")
-
-source(packagesNeededSourceCode)
-source(functionsNeededSourceCode)
-load(generalDataForPipeline)
-#source(filePathDerivationsSourceCode)
-source_python(pathForPythonCode)
-
-print(paste0(":) Please note: packagesNeededSourceCode: ", packagesNeededSourceCode))
-print(paste0(":) Please note: functionsNeededSourceCode: ", functionsNeededSourceCode))
-print(paste0(":) Please note: generalDataForPipeline: ", generalDataForPipeline))
-#print(paste0(":) Please note: filePathDerivationsSourceCode: ", filePathDerivationsSourceCode))
-print(paste0(":) Please note: pathForPythonCode: ", pathForPythonCode))
 
 
+sourcesList = pleaseRunSourceFilesFromDataAndCodeFolders(dataFolder, codeFolder)
+source(sourcesList$packagesNeededSourceCode)
+source(sourcesList$functionsNeededSourceCode)
+load(gsourcesList$eneralDataForPipeline)
+source(sourcesList$filePathDerivationsSourceCode)
+source_python(sourcesList$pathForPythonCode)
 
 ######################################################################################
 
 
 initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA = pleaseGetInitialFilePathDerivationsAndInfoObjectsForWGCNA(outputPathNameADSNPhenoOutputs,
-disease, tissueName, bodyRegion, tfsUsed, performAdditionalKMeansStep, phenotypesFilePath, log2transformInputData, scaleInputData, includeTimeStamp, numberOfRoundingDigits, netType)
-
-if (performAdditionalKMeansStep){
-print("hi yes")
-  } else {
-    print("nooo")
-  #allNetworkModulesCombinedTomSummaryStatisticsFileName = paste0(wgcnaAndKMeansOutputPath, "//", bodyRegion, "_wgcnaOnly_Power", powerEstimate, "finalCombo_CoExpressNetSummaryStats_forAllModules",outputAddOn,".csv")
-}
-if (performAdditionalKMeansStep){
-  allNetworkModulesCombinedTomSummaryStatisticsFileName = paste0("//", bodyRegion, "_wgcnaWith_kmeans_Power", powerEstimate, "finalCombo_CoExpressNetSummaryStats_forAllModules",outputAddOn,".csv")
-} else {
-  allNetworkModulesCombinedTomSummaryStatisticsFileName = paste0("//", bodyRegion, "_wgcnaOnly_Power", powerEstimate, "finalCombo_CoExpressNetSummaryStats_forAllModules",outputAddOn,".csv")
-}
-
+disease, tissueName, bodyRegion, tfsUsed, performAdditionalKMeansStep, phenotypesFilePath, log2transformInputData, scaleInputData, includeTimeStamp)
 
 load(initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA)
 #load(wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName) # please note that after we load initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA, we have names for many file paths and can load this to get WGCNA results :) YAY!
@@ -142,7 +118,7 @@ print(paste0(":) please note body region = ", bodyRegion))
 
 newDate = str_replace_all(Sys.Date(), "-", "_")
 
-#numOfRoundingDigits = numberOfRoundingDigits
+numOfRoundingDigits = numberOfRoundingDigits
 
 
 
@@ -241,6 +217,10 @@ dissTOMPower = 1 - TOMPower
 
 save(dissTOMPower,  file = dissTOMPowerOutputNameRData)
 
+
+
+
+#write.csv(TOMPower, file = tomPowerOutputName)
 
 geneTreePower = hclust(as.dist(dissTOMPower), method = "average");
 
@@ -464,12 +444,6 @@ geneModuleAssignmentsPhenosDF = pleaseGetGenesModulesPhenotypesAssignmentsOrgani
 geneModuleAssignmentsPhenosDF
 View(geneModuleAssignmentsPhenosDF)
 currentDate = as.character(now())
-# powerRelatedFilePathsRData = saveWGCNAPowerFilePathsInformation(powerRelatedFilePathsRData, powerEstimate,
-#                                    folderName, performAdditionalKMeansStep,
-#                                    tomFilePath, fullDiseaseName,
-#                                    bodyRegion, outputAddOn, allObjectsFilePath,
-#                                    genePhenoAssociationFilePath)
-
 save(significantModTraits,
      updatedModuleTraitPhenotypeDF,
      updatedGeneTraitPhenotypeDF,
@@ -497,7 +471,7 @@ save(significantModTraits,
      powerEstimate, info,
      geneTraitSignificanceDF,
      GSPvalueDF, keyModules,
-     powerRelatedFilePathsRData,
+	 geneToEntrezIDMappingPath,
      file = wgcnaWithKmeansAllObjectsExceptTOM)
 
 # we also want to save these same objects in this field so we can call them from other methods without needing info on the power :)
@@ -528,7 +502,7 @@ save(significantModTraits,
      powerEstimate, info,
      geneTraitSignificanceDF,
      GSPvalueDF, keyModules,
-     powerRelatedFilePathsRData,
+	 geneToEntrezIDMappingPath,
      file = wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName)
 
 

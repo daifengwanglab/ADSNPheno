@@ -24,7 +24,7 @@ transcriptionFactorsFilePath = "LambertAndJasparTFs.csv"
 tfsUsed = "LambertAndJaspar"
 
 # please note the location of the Gene Name to Entrez ID mapping
-geneToEntrezIDMappingPath = "F://organizedAlzheimers//saniyaGithubCodeJune2021//data//dataDefaults//entrezMappingInfo//infoDFMappingsGeneSymbolAndID.csv"
+geneToEntrezIDMappingPath = paste0(dataFolder, "dataDefaults//entrezMappingInfo//infoDFMappingsGeneSymbolAndID.csv")
 
 # our background gene regulatory data came from TRRUST2, so we input:
 # please note that this data source should have columns like this: "TF", "RegulatedGene", "Source", "Info", "CombinedName"
@@ -48,7 +48,7 @@ disease = "Alzheimers"
 diseasePetName = "AD" # or diseaseNickName
 
 
-pathForPythonCode = "F://organizedAlzheimers//saniyaGithubCodeJune2021//code//pythonCode//BuildingFullAndSubNetworksPythonCode.py"
+pathForPythonCode = paste0(codeFolder, "setupScripts//BuildingFullAndSubNetworksPythonCode.py")
 
 
 #################################################################################################
@@ -56,7 +56,7 @@ pathForPythonCode = "F://organizedAlzheimers//saniyaGithubCodeJune2021//code//py
 tissueName = "Brain"
 bodyRegion = "Mini_LTL_Demo" 
 
-inputGeneExpressionDataFilePath = "F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
+inputGeneExpressionDataFilePath = paste0(dataFolder, "originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv")
 
 computerType = "Windows" # please note that this may be helpful given that some code may work differently depending on Operating System.  ex. a Mac may differ from PC
 

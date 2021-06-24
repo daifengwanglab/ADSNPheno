@@ -24,7 +24,7 @@ transcriptionFactorsFilePath = "LambertAndJasparTFs.csv"
 tfsUsed = "LambertAndJaspar"
 
 # please note the location of the Gene Name to Entrez ID mapping
-geneToEntrezIDMappingPath = "F://organizedAlzheimers//saniyaGithubCodeJune2021//data//dataDefaults//entrezMappingInfo//infoDFMappingsGeneSymbolAndID.csv"
+geneToEntrezIDMappingPath = paste0(dataFolder, "dataDefaults//entrezMappingInfo//infoDFMappingsGeneSymbolAndID.csv")
 
 # our background gene regulatory data came from TRRUST2, so we input:
 # please note that this data source should have columns like this: "TF", "RegulatedGene", "Source", "Info", "CombinedName"
@@ -48,7 +48,7 @@ disease = "Alzheimers"
 diseasePetName = "AD" # or diseaseNickName
 
 
-pathForPythonCode = "F://organizedAlzheimers//saniyaGithubCodeJune2021//code//pythonCode//BuildingFullAndSubNetworksPythonCode.py"
+pathForPythonCode = paste0(codeFolder, "setupScripts//BuildingFullAndSubNetworksPythonCode.py")
 
 
 #################################################################################################
@@ -56,7 +56,7 @@ pathForPythonCode = "F://organizedAlzheimers//saniyaGithubCodeJune2021//code//py
 tissueName = "Brain"
 bodyRegion = "Mini_LTL_Demo" 
 
-inputGeneExpressionDataFilePath = "F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
+inputGeneExpressionDataFilePath = paste0(dataFolder, "originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv")
 
 computerType = "Windows" # please note that this may be helpful given that some code may work differently depending on Operating System.  ex. a Mac may differ from PC
 
@@ -67,7 +67,7 @@ tfsUsed = "LambertAndJaspar" # please adjust if ye are using another dataset
 
 log2transformInputData = "TRUE" # (should we apply a log2(x+1) transform on data
 scaleInputData = "FALSE"  # should we apply a scale() on data
-phenotypesFilePath = "F://organizedAlzheimers//Setup//InputDataFiles//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv"
+phenotypesFilePath = paste0(dataFolder, "phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv")
 
 
 ########################################################################################################################
@@ -188,14 +188,13 @@ enhAndPromoterInteractionsFilePath = NULL # please fill this in with file path f
 
 haveEnhancersAndPromotersHICData = FALSE# TRUE # do ye have HI-C data on Enhancers and/or Promoters
 # this may be optional chromatinInteractionDataFilePath if we do not have hi-c on Chromatin and Enhancer Interactions
-chromatinInteractionDataFilePath = "F:\\organizedAlzheimers\\Setup\\InputDataFiles\\chromatinInteractionData\\chromatinInteractionData_Hippocampus.csv"
-
+chromatinInteractionDataFilePath = NULL #
 
 haveEnhancersInteractionData = TRUE # please note that if haveEnhancersAndPromotersHICData is TRUE, this should also be true. Otherwise, do ye have data on Enhancers: (chrom, start, end) for region of interest?
 # please note that we need to at least have this dataframe:
 
 # NECESSARY:
-enhancerChromatinFilePath = "C://Users//saniy//Documents//alzheimersResearchChanu//SNPheno//data//chromatinInteractionNetworkData//LateralTemporalLobe//miniDemoEnhancerInteractionsLateralTemporalLobe.csv"
+enhancerChromatinFilePath = paste0(dataFolder, "chromatinInteractionNetworkData//LateralTemporalLobe//miniDemoEnhancerInteractionsLateralTemporalLobe.csv") #C://Users//saniy//Documents//alzheimersResearchChanu//SNPheno//data//chromatinInteractionNetworkData//LateralTemporalLobe//miniDemoEnhancerInteractionsLateralTemporalLobe.csv"
 
 # if we need to get corresponding promoter regions for our enhancer DF, please note that we will run this command
 pleaseOrganizeEnhancerRegions = TRUE  # if this is true, we need to organize the enhancer regions

@@ -19,7 +19,7 @@ numberOfRoundingDigits = 3
 # K-Means step performed after WGCNA
 performAdditionalKMeansStep = TRUE # or can be FALSE if you want original WGCNA results
 
-phenotypesFilePath = paste0(dataFolder, "//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv") 
+phenotypesFilePath = paste0(dataFolder, "phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv") 
 
 log2transformInputData = "TRUE" # (should we apply a log2(x+1) transform on data
 scaleInputData = "FALSE"  # should we apply a scale() on data

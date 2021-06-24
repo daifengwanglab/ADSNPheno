@@ -12,7 +12,7 @@ dataFolder = paste0(adsnphenoDirectory, "data//") # the main folder where data w
 
 outputPathNameADSNPhenoOutputs = paste0("F://organizedAlzheimers//ADSNPhenoOutputs_NEW//")
 
-inputGeneExpressionDataFilePath = paste0(dataFolder, "//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv") #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
+inputGeneExpressionDataFilePath = paste0(dataFolder, "originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv") #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
 
 disease = "Alzheimers"
 tissueName = "Brain"
@@ -23,7 +23,7 @@ numberOfRoundingDigits = 3
 # K-Means step performed after WGCNA
 performAdditionalKMeansStep = TRUE # or can be FALSE if you want original WGCNA results
 
-phenotypesFilePath = paste0(dataFolder, "//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv")
+phenotypesFilePath = paste0(dataFolder, "phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv")
 
 log2transformInputData = "TRUE" # (should we apply a log2(x+1) transform on data
 scaleInputData = "FALSE"  # should we apply a scale() on data
@@ -43,6 +43,7 @@ numOfCoresToUseForGenie3 = 3 # please note that this tells how many cores of com
 
 pleasePrintProgressAfterNumIterations_GetTF = 1000 # when using getTF, after how many iterations should we print the progress
 includeTheIndividualTFsInGroup = TRUE  # should we also include the individual components of group TFs?  For example: should EWSR1-FLI1 TF be made into 3 elements (TRUE): EWSR1-FLI1, EWSR1, and FLI1?  Or, just left as 1 element (FALSE): EWSR1-FLI1?
+filePathOfTFsToUse = NULL # please note that if this is NULL, we will use combined list of Lambert and Jaspar TFs.  Else, please specify csv filepath of TFs, where the TFs are in 1 column with the title called "tfName", with names that are found exactly in gene expression dataset
 
 
 # RTN Gene Regulatory Network Inputs:
@@ -115,7 +116,8 @@ grnInfoNeeded = gettingInformationForGeneExpressionGeneRegulatoryNetworks(tfsInG
                                                                           filePathOfGeneExpressionDataUsedByWGCNA,
                                                                           inputGeneExpressionDataFilePath,
                                                                           geneToEntrezIDPathForGeneExpressionDataCSV,
-                                                                          geneToEntrezIDPathForGeneExpressionDataRData, tfsDF)
+                                                                          geneToEntrezIDPathForGeneExpressionDataRData, tfsDF,
+                                                                          filePathOfTFsToUse)
 
 
 tfsToUse = grnInfoNeeded$tfsToUse
@@ -126,7 +128,8 @@ tfsInGeneExpressionDataRData = grnInfoNeeded$tfsInGeneExpressionDataRData
 colnamesVec = c("TF", "RegulatedGene", "Source", "Info", "CombinedName")
 tissueVec = rep(tissueName, ncol(allsamples))
 
-
+geneRegulatoryPathwayFileNamesRData = pleaseCreateGeneExpressionRegulatoryNetworkFileNames(disease, tissueName, bodyRegion, outputPathNameADSNPhenoOutputs, dataScalingOutputMini, outputAddOn, tfsUsed, weightThresholdGenie3)
+load(geneRegulatoryPathwayFileNamesRData)
 #####################################################################
 ############## RTN Gene Transcriptional Regulatory Network:
 

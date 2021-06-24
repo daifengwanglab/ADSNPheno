@@ -3942,7 +3942,8 @@ gettingInformationForGeneExpressionGeneRegulatoryNetworks <- function(tfsInGeneE
                                                                       inputGeneExpressionDataFilePath,
                                                                       geneToEntrezIDPathForGeneExpressionDataCSV,
                                                                       geneToEntrezIDPathForGeneExpressionDataRData,
-                                                                      tfsDF){
+                                                                      tfsDF,
+																	  filePathOfTFsToUse){
   print(":) Please note that this function gets information on the geneAndEntrezIDMappingDF, tfsToUse, and allsamples (Gene expression data), which will be used by RTN, GENIE3, and TReNA Ensemble Solver :)")
   print(paste0(":) Please note that an RData File with this information will be available here: ", tfsInGeneExpressionDataRData))
   geneInfoFilePath = entrezMappingFilePath
@@ -4990,4 +4991,152 @@ file = chromatinInteractionFilesRData)
 
 print(paste0(":) Please note that the information on the Chromatin Interaction Regulatory Network File Path Names is stored in this RData Object: chromatinInteractionFilesRData = ", chromatinInteractionFilesRData))
 return(chromatinInteractionFilesRData)
+}
+
+
+
+
+
+pleaseCreateGeneExpressionRegulatoryNetworkFileNames <- function(disease, tissueName, bodyRegion, outputPathNameADSNPhenoOutputs, dataScalingOutputMini, outputAddOn, tfsUsed, weightThresholdGenie3){
+print(paste0(":) Please note that this function creates file names and file paths for the Gene Expression Regulatory Network (RTN, GENIE3, TReNA Ensemble) :)"))
+
+  fullDiseaseName = paste0(disease, "Disease")
+  folderName = str_replace_all(paste0(disease, "_", tissueName, "_", bodyRegion), " ", "")
+  dir.create(folderName)
+  print(paste0("outputPathNameADSNPhenoOutputs: ", outputPathNameADSNPhenoOutputs))
+
+  mainOutputFolder = paste0(
+    outputPathNameADSNPhenoOutputs, folderName)
+  dir.create(mainOutputFolder, showWarnings = FALSE)
+  
+  
+
+transcriptionalRegulatoryNetworkOutputPath = paste0(mainOutputFolder, "//", "GeneRegulatNetwork")
+filePathOfRTN  = paste0(transcriptionalRegulatoryNetworkOutputPath, "//", "RTN")
+filePathOfGenie3  = paste0(transcriptionalRegulatoryNetworkOutputPath, "//", "Genie3")
+filePathOfTrena  = paste0(transcriptionalRegulatoryNetworkOutputPath, "//", "TrenaEnsemble")
+dir.create(transcriptionalRegulatoryNetworkOutputPath)
+dir.create(filePathOfRTN)
+dir.create(filePathOfGenie3)
+dir.create(filePathOfTrena)
+
+# please note that this file path will combine the RTN, Genie3, Trena GRNs from gene expression data along with Trrust2 database results
+filePathOfAll4GRNs  = paste0(transcriptionalRegulatoryNetworkOutputPath, "//", "CombinedGRN_4Sources//")
+
+if (minNumSourcesGeneGRN > 1){
+        grnResultsCombinedFileNameCSV = paste0(filePathOfAll4GRNs,"finalComboGeneExpRegNet_GenieRTNTrenaTrrust2_TFtoGene_", disease, "_", bodyRegion, "_",
+		dataScalingOutputMini, "_", (minNumSourcesGeneGRN), "_minSources.csv")
+
+		 grnResultsCombinedFileNameRData = paste0(filePathOfAll4GRNs,"finalComboGeneExpRegNet_GenieRTNTrenaTrrust2_TFtoGene_", disease, "_", bodyRegion, "_",
+		dataScalingOutputMini, "_", (minNumSourcesGeneGRN), "_minSources.RData")
+} else {
+		grnResultsCombinedFileNameCSV = paste0(filePathOfAll4GRNs,"finalComboGeneExpRegNet_GenieRTNTrenaTrrust2_TFtoGene_", disease, "_", bodyRegion, "_",
+		dataScalingOutputMini, ".csv")
+
+		 grnResultsCombinedFileNameRData = paste0(filePathOfAll4GRNs,"finalComboGeneExpRegNet_GenieRTNTrenaTrrust2_TFtoGene_", disease, "_", bodyRegion, "_",
+		dataScalingOutputMini, ".RData")
+}
+
+
+grnResultsComboForPythonInputFileNameCSV = grnResultsCombinedFileNameCSV
+
+dir.create(filePathOfAll4GRNs)
+
+newDate = str_replace_all(Sys.Date(), "-", "_")
+csvPart = paste0("RTN_", tfsUsed, "TFs_", disease, "_", bodyRegion,  outputAddOn,  newDate, "Final.csv")
+rDataPart = paste0("RTN_", tfsUsed, "TFs_", disease, "_", bodyRegion, outputAddOn, "_", newDate, "Final.RData")
+oldRDataPart = paste0(filePathOfRTN, "RTN_", tfsUsed, "TFs_", disease, "_", bodyRegion, outputAddOn, "_", newDate, "_Original.RData")
+RTN_rDataPart = paste0(filePathOfRTN, "//RTN_", tfsUsed, "TFs_", disease, "_", bodyRegion, outputAddOn,  "_FinalDataObjects.RData")
+
+csvPartRTNFinal = paste0(filePathOfRTN, "//RTN_", tfsUsed, "TFs_", disease, "_", bodyRegion,  outputAddOn,  newDate, "FinalRTN_rtnRegulonsDF.csv")
+csvPartRTNFinal_NoDate = paste0(filePathOfRTN, "//RTN_", tfsUsed, "TFs_", disease, "_", bodyRegion,  outputAddOn, "FinalRTN_rtnRegulonsDF.csv")
+
+
+newCsvPart = paste0(filePathOfRTN, "//", csvPart)
+newRDataPart = paste0(filePathOfRTN,"//",  rDataPart)
+print(paste0("RTN newCsvPart: ", newCsvPart))
+print(paste0("RTN rDataPart: ", newRDataPart))
+rm(csvPart)
+rm(rDataPart)
+print(newCsvPart)
+print(newRDataPart)
+
+genie3CsvPart = paste0(filePathOfGenie3,"//", tfsUsed, "TFs_", disease, "_", bodyRegion, "_", dataScaling, "_", newDate, "Final.csv")
+genie3RDataPart = paste0(filePathOfGenie3,"//", tfsUsed, "TFs_", disease, "_", bodyRegion, "_", dataScaling,  "_", newDate, "Final.RData")
+oldGenie3RDataPart = paste0(filePathOfGenie3, "//",tfsUsed, "TFs_", disease, "_", bodyRegion, "_", dataScaling, "_", newDate, "_Original.RData")
+genie3_rDataPart = paste0(filePathOfGenie3, "//",tfsUsed, "TFs_", disease, "_", bodyRegion, "_", dataScaling, "_FinalDataObjects_Genie3All.RData")
+
+genie3RDataPartFinal = paste0(filePathOfGenie3, "//",tfsUsed, "TFs_", disease, "_", bodyRegion, "_", dataScaling,"_minWeightThresh_", weightThresholdGenie3, "_FinalGenie3DF.RData")
+genie3CsvPartFinal = paste0(filePathOfGenie3, "//",tfsUsed, "TFs_", disease, "_", bodyRegion, "_", dataScaling, "_minWeightThresh_", weightThresholdGenie3, "_FinalGenie3DF.csv")
+
+
+filePathOfTFtoModule  = paste0(transcriptionalRegulatoryNetworkOutputPath, "//", "TFtoModuleRTN//")
+dir.create(filePathOfTFtoModule)
+
+trenaOutpathALLCSV = paste0(filePathOfTrena, "//trenaEnsemble_", bodyRegion, "_ALL_",
+                            disease, "_", tissueName, ".csv")
+
+
+trenaOutpathALLRData = paste0(filePathOfTrena, "//trenaEnsemble_", bodyRegion, "_ALL_",
+                              disease, "_", tissueName, ".RData")
+
+
+trenaOutpathALLCSV_Final = paste0(filePathOfTrena, "//trenaEnsemble_", bodyRegion, "_ALL_",
+                                  disease, "_", tissueName, "_final_trenaEnsembleDF.csv")
+
+
+trenaOutpathALLRData_Final = paste0(filePathOfTrena, "//trenaEnsemble_", bodyRegion, "_ALL_",
+                                    disease, "_", tissueName, "_final_trenaEnsembleDF.RData")
+print(paste0("trenaOutpathALLCSV: ", trenaOutpathALLCSV))
+print(paste0("trenaOutpathALLRData: ", trenaOutpathALLRData))
+
+finalFullGeneRegulatoryNetworkOutputPath = paste0(mainOutputFolder, "//", "FinalFullGRN//")
+
+fullNetALLOrganizedCSV = paste0(finalFullGeneRegulatoryNetworkOutputPath,
+                                "fullNetwork_chromAndGeneExpr_TFs_ALL_", folderName, "_FINAL.csv")
+fullNetALLOrganizedCSV_Done = paste0(finalFullGeneRegulatoryNetworkOutputPath,
+                                     "final_fullNetwork_chromAndGeneExpr_TFs_ALL_", folderName, "_FINAL.csv")
+
+
+
+finalFullNetworkChromatinAndGeneExpressCSV = paste0(finalFullGeneRegulatoryNetworkOutputPath,
+                                     "FINAL_FULL_GRN_chromAndGeneExpr_TFs_ALL_", folderName, ".csv")
+
+
+dir.create(finalFullGeneRegulatoryNetworkOutputPath)
+geneRegulatoryPathwayFileNamesRData = paste0(finalFullGeneRegulatoryNetworkOutputPath, "finalFullGRNRDataObjectsForFilePaths.RData")
+
+save(finalFullNetworkChromatinAndGeneExpressCSV,
+fullNetALLOrganizedCSV_Done,
+fullNetALLOrganizedCSV,
+finalFullGeneRegulatoryNetworkOutputPath,
+trenaOutpathALLCSV,
+trenaOutpathALLRData,
+filePathOfTrena,
+trenaOutpathALLRData_Final,
+trenaOutpathALLCSV_Final,
+filePathOfTFtoModule,
+transcriptionalRegulatoryNetworkOutputPath,
+genie3CsvPartFinal,
+genie3RDataPartFinal,
+genie3_rDataPart,
+oldGenie3RDataPart,
+genie3CsvPart,
+genie3RDataPart,
+newRDataPart,
+newCsvPart,
+csvPartRTNFinal_NoDate,
+csvPartRTNFinal,
+RTN_rDataPart,
+oldRDataPart,
+filePathOfAll4GRNs,
+grnResultsCombinedFileNameCSV,
+grnResultsComboForPythonInputFileNameCSV,
+grnResultsCombinedFileNameRData,
+filePathOfGenie3,
+filePathOfRTN, file = geneRegulatoryPathwayFileNamesRData)
+
+print(paste0(":) Please note that the information on the Gene Expression Regulatory Network File Path Names is stored in this RData Object: geneRegulatoryPathwayFileNamesRData = ", geneRegulatoryPathwayFileNamesRData))
+return(geneRegulatoryPathwayFileNamesRData)
+
 }
