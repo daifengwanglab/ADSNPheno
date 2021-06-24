@@ -75,17 +75,6 @@ pip install matplotlib
 
 ```
 
-
-virtualenv_create("r-reticulate")
-#
-# # install SciPy
-virtualenv_install("r-reticulate", "scipy", python_version  = "3.8.5")
-virtualenv_install("r-reticulate", "pandas", python_version  = "3.8.5")
-virtualenv_install("r-reticulate", "numpy", python_version  = "3.8.5")
-virtualenv_install("r-reticulate", "datetime", python_version  = "3.8.5")
-virtualenv_install("r-reticulate", "fsspec", python_version  = "3.8.5")
-
-
 ## Support
 
 Please note that this code was developed by Saniya Khullar and Daifeng Wang, Ph.D.
