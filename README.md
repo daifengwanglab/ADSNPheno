@@ -20,19 +20,19 @@ mechanisms from disease variants to phenotypes.
 Method
 ------
 
-This pipeline, ADSNPheno, aims to predict gene regulatory networks of AD
+This integrative analysis aims to predict gene regulatory networks of AD
 risk Single-Nucleotide Polymorphisms (SNPs) to different AD phenotypes.
-In particular, ADSNPheno first clusters gene co-expression networks and
-identifies the gene modules for various AD phenotypes. ADSNPheno further
-predicts the transcription factors (TFs) that significantly regulate the
+In particular, we first cluster gene co-expression networks and
+identifies the gene modules for various AD phenotypes. Next, we further
+predict the transcription factors (TFs) that significantly regulate the
 genes in each module, as well as the AD SNPs interrupting the TF binding
-sites on the regulatory elements. Finally, ADSNPheno constructs a full
+sites on the regulatory elements. Finally, we construct a full
 gene regulatory network linking SNPs, interrupted TFs, and regulatory
 elements to target genes for each phenotype. This network thus provides
 mechanistic insights of gene regulation from disease risk variants to AD
 phenotypes.
 
-Please note our pipeline, ADSNPheno:
+Please note these steps in our integrative analysis:
 
 <p align="center">
   <img width="1500" src="adsnpheno.png">
@@ -41,12 +41,12 @@ Please note our pipeline, ADSNPheno:
 
 ## Hardware Requirements
 
-Please note that this analysis is based on R 4.0 and Python. You will only need a standard computer with enough RAM to support the operations. For predicting gene regulatory networks, a *Linux* system with 32 GB RAM and 32GB storage would be enough to support.
+Please note that this integrative analysis is based on R 4.0 and Python. You will only need a standard computer with enough RAM to support the operations. For predicting gene regulatory networks, a *Linux* system with 32 GB RAM and 32GB storage would be enough to support.
 
 ## Software Requirements
 
 Please note that you will need to have R installed as well as Python (Version 3.8.5 or above).  In Python, we will be installing packages such as numpy, pandas, math, datetime, sklearn, and fsspec. 
-Please note that you can find more information on R packages that are needed under code $\rightarrow$ setupScripts $\rightarrow$ packagesNeeded.R.  Please note that many of the R packages do require Bioconductor. 
+Please note that you can find more information on R packages that are needed under code $-->$ setupScripts $-->$ packagesNeeded.R.  Please note that many of the R packages do require Bioconductor. 
 
 
 ## Support
