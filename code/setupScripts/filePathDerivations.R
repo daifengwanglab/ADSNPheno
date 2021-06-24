@@ -12,7 +12,7 @@ outputPathNameADSNPhenoOutputs
 folderName = str_replace_all(paste0(disease, "_", tissueName, "_", bodyRegion), " ", "")
 dir.create(folderName)
 print(paste0("outputPathNameADSNPhenoOutputs: ", outputPathNameADSNPhenoOutputs))
-
+pipeline = "ADSNPheno"
 mainOutputFolder = paste0(
   outputPathNameADSNPhenoOutputs, folderName)
 dir.create(mainOutputFolder, showWarnings = FALSE)
@@ -147,7 +147,7 @@ dir.create(geneModuleMembershipFilePath, showWarnings = FALSE)
 
 # :) Please note that this R file by Saniya has all the parameters we need
 
-source("F:\\organizedAlzheimers\\Setup\\functionsNeeded.R")
+#source("F:\\organizedAlzheimers\\Setup\\functionsNeeded.R")
 diseaseTraits = read.csv(phenotypesFilePath,
                          header = TRUE)
 

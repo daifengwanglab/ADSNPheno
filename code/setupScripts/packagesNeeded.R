@@ -1,6 +1,7 @@
 # Please note that this file has all the packages that are needed
 #BiocManager::install("GenomicInteractions")
 #BiocManager::install("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library(plyr)
 
 library("aliases2entrez")
 library("biomaRt")
@@ -27,6 +28,14 @@ library(RedeR)
 library(RTN)
 library(rvest)
 library(stringr)
+
+
+#library(EBSeq)
+library(DESeq2)
+library(edgeR)
+#library(DEFormats)
+#library(Rsubread)
+
 
 library('TxDb.Hsapiens.UCSC.hg19.knownGene')
 library(MeSH.Hsa.eg.db)

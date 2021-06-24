@@ -30,6 +30,12 @@ numOfRoundingDigits = numberOfRoundingDigits
 
 
 ############# WGCNA CLUSTERING
+initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA = pleaseGetInitialFilePathDerivationsAndInfoObjectsForWGCNA(outputPathNameADSNPhenoOutputs, inputGeneExpressionDataFilePath,
+disease, tissueName, bodyRegion, tfsUsed, performAdditionalKMeansStep, phenotypesFilePath, log2transformInputData, scaleInputData, includeTimeStamp, numberOfRoundingDigits, netType)
+
+load(initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA)
+
+
 geneAndEntrezIDMappingDF = geneExpressionDataSetToEntrezIDMapping(inputGeneExpressionDataFilePath,
                                                                   geneToEntrezIDPathForGeneExpressionDataCSV,
                                                                   geneToEntrezIDPathForGeneExpressionDataRData)
@@ -374,9 +380,40 @@ save(significantModTraits,
      powerEstimate, info,
      geneTraitSignificanceDF,
      GSPvalueDF, keyModules,
+	 powerRelatedFilePathsRData,
      file = wgcnaWithKmeansAllObjectsExceptTOM)
 
 
+# we also want to save these same objects in this field so we can call them from other methods without needing info on the power :)
+save(significantModTraits,
+     updatedModuleTraitPhenotypeDF,
+     updatedGeneTraitPhenotypeDF,
+     significantGeneTraitsDF,
+     bodyRegion,
+     currentDate,
+     folderName,
+     disease,
+     fullDiseaseName,
+     tissueName,
+     dataScaling,
+     datExpr,
+     geneModuleAssignmentsPhenosDF,
+     geneAndEntrezIDMappingDF,
+     tfsDF,
+     datTraits,
+     moduleTraitCor,
+     moduleTraitPvalue,
+     geneModuleMembership,
+     MMPvalue,
+     clusterInfo,
+     dynamicColorsKmeans,
+     MEList, MEs, hubs,
+     allNetworkModulesTomSummaryStatisticsDF,
+     powerEstimate, info,
+     geneTraitSignificanceDF,
+     GSPvalueDF, keyModules,
+	 powerRelatedFilePathsRData,
+     file = wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName)
 print(paste0(":) please note that there are ", length(keyModules), " gene modules that are associated with at least 1 of the phenotypes"))
 clusterInfoTemp = clusterInfo # please hold onto the original clusterInfo for all modules
 clusterInfo = clusterInfo[which(clusterInfo[,grep("module", colnames(clusterInfo))] %in% keyModules),]
@@ -393,9 +430,16 @@ rm(clusterInfoTemp) # please remove temp variable
 load(powerRelatedFilePathsRData)
 load(wgcnaWithKmeansAllObjectsExceptTOM)
 
-region = folderName
-regionName = folderName
 
+
+initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA = pleaseGetInitialFilePathDerivationsAndInfoObjectsForWGCNA(outputPathNameADSNPhenoOutputs, inputGeneExpressionDataFilePath,
+disease, tissueName, bodyRegion, tfsUsed, performAdditionalKMeansStep, phenotypesFilePath, log2transformInputData, scaleInputData, includeTimeStamp, numberOfRoundingDigits, netType)
+
+load(initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA)
+load(wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName) # please note that after we load initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA, we have names for many file paths and can load this to get WGCNA results :) YAY!
+
+
+############
 powerVal = powerEstimate
 
 if (enrichmentsForKeyModulesOnly){
@@ -408,7 +452,7 @@ if (enrichmentsForKeyModulesOnly){
   load(geneAssignmentsWithKmeansOutputNameRData)
 }
 head(clusterInfo)
-colnames(clusterInfo) #  "??.."      "entrezID" "module24" "module26" "module44" "module30" "module" "module37"
+colnames(clusterInfo)
 dim(clusterInfo)
 entrezIDCol = grep("entrez", colnames(clusterInfo))
 print(paste0(":) Please note the entrezIDCol is: ", entrezIDCol))
@@ -416,11 +460,11 @@ modColNum = grep("module", colnames(clusterInfo)) # module column number
 
 print(paste0(":) please note that there are ", length(keyModules), " gene modules that are associated with at least 1 of the phenotypes"))
 
-
+moduleEnrichmentsInfoList = pleaseCreateModuleEnrichmentsFileNames(regionName, pathForWGCNA, performMESHEnrichment, performMolSigDBEnrichment)
 if (performMESHEnrichment){
   print(paste0(":) Please note that since performMESHEnrichment is", performMESHEnrichment, " we are performing Medical Subject Enrichment Analysis! :)"))
-  #meshEnrichmentsFilePath = paste0(moduleEnrichmentsFilePath, "//MeSH")
-  #dir.create(meshEnrichmentsFilePath, showWarnings = FALSE)
+  meshEnrichmentsFilePath =  moduleEnrichmentsInfoList$meshEnrichmentsFilePath
+
   meshCategoriesList = runAllMeSHEnrichments(categoryVec = MESHCategoryVec, #c("A", "B", "C", "D", "E", "F", "G", "H"),
                                              powerVal = powerEstimate,
                                              region = regionName,
@@ -435,8 +479,8 @@ if (performMESHEnrichment){
 colNum = modColNum
 
 if(performMolSigDBEnrichment){
-  performMolSigDBEnrichment = TRUE
-
+  #performMolSigDBEnrichment = TRUE
+  molSigDBEnrichmentsFilePath = moduleEnrichmentsInfoList$molSigDBEnrichmentsFilePath
   print(paste0(":) Please note that since performMolSigDBEnrichment is", performMolSigDBEnrichment, " we are performing Molecular Signatures Database Enrichment Analysis! :)"))
 
   molsigDBDF = data.frame()
@@ -456,11 +500,17 @@ if(performMolSigDBEnrichment){
   print(paste0(":) Please note that we are done with Molecular Signatures Database (MolSigDB) Enrichments!"))
 
 }
+##########
+
+
 
 
 
 ###############################################################################################################################################################################
 ######## SNPs breaking TF Binding Sites:
+snpsOutputPathRDataObjects = pleaseCreateSNPsMotifBreakrFileNames(outputPathNameADSNPhenoOutputs, pValThreshForSNPs, disease, tissueName, bodyRegion)
+load(snpsOutputPathRDataObjects)
+
 motifBreakRSNPsDF = findingSNPsBreakingTFBindingSitesFromGWASDataFunction(gwasDataFile,
                                                                           pValThreshForSNPs,
                                                                           contextForGWASDataSet,

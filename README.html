@@ -366,10 +366,13 @@ pre code {
 
 <div id="readme" class="section level1">
 <h1>README</h1>
-<p>#<code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code></p>
 </div>
 <div id="adsnpheno-a-computational-pipeline-of-multi-omics-analysis-to-predict-gene-regulatory-networks-from-disease-variants-to-phenotypes-with-applications-in-alzheimers-disease-and-sars-cov-2" class="section level1">
 <h1>ADSNPheno: A computational pipeline of multi-omics analysis to predict gene regulatory networks from disease variants to phenotypes with applications in Alzheimer’s disease and SARS-CoV-2</h1>
+<div id="paper" class="section level2">
+<h2>Paper</h2>
+<p>Please note that this code corresponds to this current pre-print, available on Biorxiv: <a href="https://www.biorxiv.org/content/10.1101/2021.06.21.449165v1.full.pdf+html">Integrative analysis of multi-omics reveals gene regulatory networks across brain regions from risk variants to phenotypes of Alzheimer’s disease and Covid-19</a> by Saniya Khullar and Daifeng Wang, Ph.D.</p>
+</div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
 <p>Genome-wide association studies (GWAS) have found many genetic risk variants associated with Alzheimer’s disease (AD). However, how these risk variants affect deeper phenotypes such as disease progression and immune response remains elusive. Also, our understanding of cellular and molecular mechanisms from disease risk variants to various disease phenotypes is still limited. To address these problems, we developed a computational pipeline of integrated multi-omics analysis from genotype, transcriptomics, epigenomics to phenotypes for revealing gene regulatory mechanisms from disease variants to phenotypes.</p>
@@ -388,7 +391,7 @@ pre code {
 </div>
 <div id="software-requirements" class="section level2">
 <h2>Software Requirements</h2>
-<p>Please note that you will need to have R installed as well as Python (Version 3.8.5 or above). In Python, we will be installing packages such as numpy, pandas, math, datetime, sklearn, and fsspec. Please note that you can find more information under code <span class="math inline">\(\rightarrow\)</span></p>
+<p>Please note that you will need to have R installed as well as Python (Version 3.8.5 or above). In Python, we will be installing packages such as numpy, pandas, math, datetime, sklearn, and fsspec. Please note that you can find more information on R packages that are needed under code <span class="math inline">\(\rightarrow\)</span> setupScripts <span class="math inline">\(\rightarrow\)</span> packagesNeeded.R. Please note that many of the R packages do require Bioconductor.</p>
 </div>
 <div id="support" class="section level2">
 <h2>Support</h2>
@@ -399,7 +402,21 @@ pre code {
 <div id="demo" class="section level2">
 <h2>Demo</h2>
 <p>This demo applies our general, open-source computational pipeline, <strong>ADSNPheno</strong>, in the context of Alzheimer’s disease (AD). Here, we aim to reveal underlying gene regulatory mechanisms of AD risk variants to different AD phenotypes. Particularly, ADSNPheno first identifies the gene co-expression modules for various AD phenotypes via clustering gene co-expression networks. ADSNPheno further predicts the transcription factors (TFs) that significantly regulate the genes in each module, as well as the AD SNPs interrupting the TF binding sites on the regulatory elements. Finally, ADSNPheno constructs a full gene regulatory network linking SNPs, TFs, and regulatory elements to target genes for each phenotype. This network thus provides mechanistic insights of gene regulation from disease risk variants to the phenotype in AD.</p>
-<p>Please note that we provide an example application of ADNSPheno to the Lateral Temporal Lobe gene expression data set <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699">GSE159699</a>.</p>
+<p>We provide a demo of our integrative analysis to the Lateral Temporal Lobe (LTL) region for predicting its gene regulatory network and linking SNPs to AD phenotypes. The gene expression data set and Enhancers data set are from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699">GSE159699</a>. For the demo, we randomly selected 200 genes from the gene expression data, and around 1,222 rows of Enhancer epigenomics data for the Lateral Temporal Lobe. Please see all codes for running this demo at [[link to inputsNeededByUser_DemoLTL.R]].</p>
+<p>In addition, all codes for our integrative analysis for general usage is provided in a single file [[link to adsnphenoCodesToRun.R]]. Also, we provide the codes for each step of our analysis as follows:</p>
+<ul>
+<li>Identifying gene co-expression modules and modular enrichments at [[link to file]]</li>
+<li>Predicting gene regulatory network linking TFs, regulatory elements to target genes at [[link to xxx. R]]</li>
+<li>Linking AD SNPs to interrupted TFBSs, target genes to phenotypes at [[link to file]]</li>
+<li>Differential expressions analysis of Covid-19 severity at [[link</li>
+<li>Machine learning predicting of Covid-19 severity from AD-Covid gene regulatory networks at [[link to xxx. R]]</li>
+<li>Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes at [link to xxx. R]]</li>
+</ul>
+</div>
+<div id="tutorial" class="section level2">
+<h2>Tutorial</h2>
+<p>Please note that a detailed Tutorial of this code will be available here: <a href="https://saniyakhullar.github.io/SNPheno/">ADSNPheno Book</a>.</p>
+<p>Please let us know if you have any questions! Thank you!</p>
 <p>```</p>
 </div>
 </div>

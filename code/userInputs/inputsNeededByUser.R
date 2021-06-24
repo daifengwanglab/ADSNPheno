@@ -37,10 +37,6 @@ includeTimeStamp = "TRUE"
 
 outputPathNameADSNPhenoOutputs = paste0("F://organizedAlzheimers//ADSNPhenoOutputs_NEW//")
 
-chromosomeVec = c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6",
-                  "chr7", "chr8", "chr9", "chr10", "chr11", "chr12",
-                  "chr13", "chr14", "chr15", "chr16", "chr17", "chr18",
-                  "chr19", "chr20", "chr21", "chr22", "chrX")#, "chrY")
 
 
 
@@ -52,16 +48,16 @@ disease = "Alzheimers"
 diseasePetName = "AD" # or diseaseNickName
 
 
+pathForPythonCode = "F://organizedAlzheimers//saniyaGithubCodeJune2021//code//pythonCode//BuildingFullAndSubNetworksPythonCode.py"
+
 
 #################################################################################################
 
 tissueName = "Brain"
-bodyRegion = "MiniFinalDemo_LTL" 
-setwd(dataFolder) # please set this folder as working directory
-getwd()
-inputGeneExpressionDataFilePath = paste0(dataFolder, "//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv") #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
-#inputGeneExpressionDataFilePath = paste0(dataFolder, "F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
-                                                                                  
+bodyRegion = "Mini_LTL_Demo" 
+
+inputGeneExpressionDataFilePath = "F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo_200genes.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
+
 computerType = "Windows" # please note that this may be helpful given that some code may work differently depending on Operating System.  ex. a Mac may differ from PC
 
 useTFsFoundByADSNPheno = TRUE # please note that by default we use  combined list of Lambert and Jaspar TFs.
@@ -71,9 +67,7 @@ tfsUsed = "LambertAndJaspar" # please adjust if ye are using another dataset
 
 log2transformInputData = "TRUE" # (should we apply a log2(x+1) transform on data
 scaleInputData = "FALSE"  # should we apply a scale() on data
-phenotypesFilePath = paste0(dataFolder, "//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv") #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//LateralTemporalLobeRegionGeneExpressionData_miniDemo.csv" #"F://organizedAlzheimers//Setup//InputDataFiles//originalGeneExpressionDataSets//originalLateralTemporalLobeRegionGeneExpressionData.csv"
-
-#phenotypesFilePath = "F://organizedAlzheimers//Setup//InputDataFiles//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv"
+phenotypesFilePath = "F://organizedAlzheimers//Setup//InputDataFiles//phenotypes//AlzheimersLateralTemporalLobePhenotypesUpdated.csv"
 
 
 ########################################################################################################################
@@ -93,7 +87,6 @@ useRecommendedPower = "TRUE" #FALSE" # otherwise, please use the default that WG
 # module trait and gene-trait associations:
 positiveCorrelationsOnly = TRUE #   for module-trait associations and gene-trait associations
 pValueCutOffForSignificance = 0.05 # please note that associations with a p-value < pValueCutOffForSignificance will be considered statistically significant
-enrichmentsForKeyModulesOnly = FALSE # please note that this says if we only want the enrichments for modules that are associated with at least 1 key phenotype.  If positiveCorrelationsOnly is TRUE then this is only for modules positively associated with at least 1  phenotype
 # co-expression network part:
 percentilesForCoexpressionNetworkVec = c(0, 0.25, 0.50, 0.75, 0.85, 0.90, 0.95, 1)
 minTOMThresholdValue = 0.0001
@@ -116,9 +109,12 @@ nIterations = 201 # what is the maximum # of iterations of k-means that we are w
 meg = 0 # Minimum number of genes exchanged: if before the number of iterations, the number of genes exchanged in the current iteration is less than this parameter, k-means algorithm stops.
 
 
+
 #############################################################################################################################
 ####### GENE MODULE ANNOTATION:
 # Step 3:  Annotate modular functions by enrichment analysis
+enrichmentsForKeyModulesOnly = FALSE # please note that this says if we only want the enrichments for modules that are associated with at least 1 key phenotype.  If positiveCorrelationsOnly is TRUE then this is only for modules positively associated with at least 1  phenotype
+
 performMESHEnrichment = TRUE
 MESHCategoryVec = c("A", "B", "C", "D", "E", "F", "G", "H")
 meshDatabaseNamesVec = c("gendoo", "gene2pubmed", "RBBH")
@@ -169,6 +165,10 @@ motifBackgroundProbabilitiesVec = c(A=0.25, C=0.25, G=0.25, T=0.25)  # please ad
 # please note that according to page 5 top, SnowParam: Supported on all platforms.
 motifBreakRParallelComputing_BPPARAM = BiocParallel::SnowParam(numWorkersMotifbreakR)
 
+chromosomeVec = c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6",
+                  "chr7", "chr8", "chr9", "chr10", "chr11", "chr12",
+                  "chr13", "chr14", "chr15", "chr16", "chr17", "chr18",
+                  "chr19", "chr20", "chr21", "chr22", "chrX")#, "chrY")
 
 ##############################################################################################################################
 
@@ -188,13 +188,14 @@ enhAndPromoterInteractionsFilePath = NULL # please fill this in with file path f
 
 haveEnhancersAndPromotersHICData = FALSE# TRUE # do ye have HI-C data on Enhancers and/or Promoters
 # this may be optional chromatinInteractionDataFilePath if we do not have hi-c on Chromatin and Enhancer Interactions
-chromatinInteractionDataFilePath = NULL #
+chromatinInteractionDataFilePath = "F:\\organizedAlzheimers\\Setup\\InputDataFiles\\chromatinInteractionData\\chromatinInteractionData_Hippocampus.csv"
+
 
 haveEnhancersInteractionData = TRUE # please note that if haveEnhancersAndPromotersHICData is TRUE, this should also be true. Otherwise, do ye have data on Enhancers: (chrom, start, end) for region of interest?
 # please note that we need to at least have this dataframe:
 
 # NECESSARY:
-enhancerChromatinFilePath = paste0(dataFolder, "chromatinInteractionNetworkData//miniDemoEnhancerInteractionsLateralTemporalLobe.csv")
+enhancerChromatinFilePath = "C://Users//saniy//Documents//alzheimersResearchChanu//SNPheno//data//chromatinInteractionNetworkData//LateralTemporalLobe//miniDemoEnhancerInteractionsLateralTemporalLobe.csv"
 
 # if we need to get corresponding promoter regions for our enhancer DF, please note that we will run this command
 pleaseOrganizeEnhancerRegions = TRUE  # if this is true, we need to organize the enhancer regions
@@ -203,6 +204,7 @@ enhancerRegionCol = NULL  # please note that if pleaseOrganizeEnhancerRegions is
 maxBasesUpstreamForPromoterLength = 5000 #  Promoters given a # of bases of interest for the promoter length.
 geneIDColumnNameEnhancerDF = "entrezID"
 
+numOfCoresToUseForScgrnom = 6
 
 
 #################################################################################################
@@ -211,7 +213,6 @@ minNumSourcesGeneGRN = 2
 hasFinalFullNetworkForChromosome = "FALSE"
 filePathForFullNetwork = ""
 
-numOfCoresToUseForScgrnom = 6
 numOfCoresToUseForGenie3 = 3 # please note that this tells how many cores of computer power we want for running GENIE3
 
 pleasePrintProgressAfterNumIterations_GetTF = 1000 # when using getTF, after how many iterations should we print the progress
@@ -236,8 +237,6 @@ varianceSizeForTFsAndTargetGeneForTrena = 0.25# NULL # please note that if useVa
 
 ########################################
 # Single Nucleotide Polymorphisms (SNPs)
-packagesNeededSourceCode = paste0(codeFolder, "setupScripts//packagesNeeded.R")
-source(packagesNeededSourceCode)
 # organizing the Genome-Wide Association Study Data
 # Requirements for SNPs and P-value Columns:
 # 1.  Please ensure that your dataset has labeled the SNPs column as any of these: SNP, MarkerName, MARKERNAME,
@@ -274,19 +273,4 @@ motifBackgroundProbabilitiesVec = c(A=0.25, C=0.25, G=0.25, T=0.25)  # please ad
 # please note that according to page 5 top, SnowParam: Supported on all platforms.
 motifBreakRParallelComputing_BPPARAM = BiocParallel::SnowParam(numWorkersMotifbreakR)
 
-
-runningADSNPhenoSourceCode = paste0(codeFolder, "runningADSNPhenoScripts.R")
-adsnphenoCodeFiles = paste0(codeFolder, "adsnphenoCodesToRun.R")
-
-###############################################
-
-includeTheIndividualTFsInGroup_Python = "Yes"
-includeTheIndividualTFsInGroup = TRUE # please note this should be the same as includeTheIndividualTFsInGroup_Python (but boolean instead)
-enhancer_buffer_kbp = 10 # how many kilobases (1,000 base pairs) should we add to start and end of the enhancer regions (for finding SNPs along there)?
-promoter_buffer_kbp = 2 # how many kilobases (1,000 base pairs) should we add to start and end of the promoter regions (for finding SNPs along there)?
-
-progressBarPythonIterations = 5000 # how many iterations should we print out output to R console when running Python script?
-
-source(runningADSNPhenoSourceCode)
-source(adsnphenoCodeFiles)
 

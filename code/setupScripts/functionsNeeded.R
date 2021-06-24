@@ -9,14 +9,6 @@ returnCurrentDateToFilePath <- function(){
 }
 # https://github.com/juanbot/CoExpNets/blob/master/R/main.R
 
-# corDistance = function(a,b,signed=TRUE){
-#   # if(signed)
-#   #   return(0.5 * (1 + WGCNA::corFast(a,b)))
-#   # return(abs(WGCNA::corFast(a,b)))
-#   if(signed)
-#     return(0.5 * (1 + cor(a,b)))
-#   return(abs(cor(a,b)))
-# }
 
 corDistance = function(a,b,signed=TRUE,cor.type="pearson"){
   if(cor.type=="pearson"){
@@ -134,9 +126,6 @@ identifyingTFsInGeneExpressionDataSet <- function(allsamples, tfsDF, geneToEntre
 }
 
 
-# def geneExpressionDataSetToEntrezIDMapping(inputGeneExpressionDataFilePath,
-# geneToEntrezIDPathForGeneExpressionDataCSV,
-# geneToEntrezIDPathForGeneExpressionDataRData):
 geneExpressionDataSetToEntrezIDMapping <- function(inputGeneExpressionDataFilePath,
                                                    geneToEntrezIDPathForGeneExpressionDataCSV,
                                                    geneToEntrezIDPathForGeneExpressionDataRData){
@@ -164,9 +153,6 @@ geneExpressionDataSetToEntrezIDMapping <- function(inputGeneExpressionDataFilePa
   print(geneAndEntrezIDMappingDF)
   return(geneAndEntrezIDMappingDF)
 }
-#    header = TRUE,
-#   check.names = FALSE, row.names = 1)
-# "one could also start with normalized counts (or RPKM/FPKM data) and log-transform them using log2(x+1)"
 
 
 selectGenes <- function(counts, min.count=10, N=0.90){
@@ -221,9 +207,6 @@ creatingDatExprFromGeneExpressionDataset <- function(inputGeneExpressionDataFile
   gsg = goodSamplesGenes(alzheimersDFold, verbose = 4)#3);
   gsg$allOK # this is TRUE, so all genes have passed the test :)
   library("edgeR")
-  #keep.exprs <- filterByExpr(alzheimersDFold, min.count=10)
-  #filt1 <- x[keep.exprs,]
-  #keep.exprs <- selectGenes(alzheimersDFold, min.count=10, N=0.90)
 
 
   if (!gsg$allOK)
@@ -257,16 +240,12 @@ creatingDatExprFromGeneExpressionDataset <- function(inputGeneExpressionDataFile
 
   }
 
-  #sdataAlzh2 = log2(alzheimers_meanRMAData_raw + 1)  # log2 transform of the data
-  #ndataAlzh2 = scale(sdataAlzh2) # finding the z-score values for this data
-  colnames(ndataAlzh2) = str_replace_all(colnames(ndataAlzh2), "X", "")
-
+   colnames(ndataAlzh2) = str_replace_all(colnames(ndataAlzh2), "X", "")
+if (includeTimeStamp == "TRUE"){
   write.csv(ndataAlzh2, geneExpressionOutputNameCSV_withDate)
+  }
   write.csv(ndataAlzh2, geneExpressionOutputNameCSV)
 
-
-
-  #ndataAlzh2 = alzheimers_meanRMAData_raw
   alzheimersDF = as.data.frame(ndataAlzh2)
   head(alzheimersDF)
   dim(alzheimersDF)
@@ -306,12 +285,6 @@ returningSoftThresholdPowerResults <- function(datExpr = datExpr, maxNumPowers =
   # [43] 43 44 45 46 47 48 49 50
   # Call the network topology analysis function
   print(paste0("please note :) we will check soft-thresholding power values for powers from 1 to maxNumPowers = ", maxNumPowers))
-  #library("WGCNA")
-
-  #
-  # print(paste0(":) Please note that there are: ", nGenes, " genes and ",
-  #              nSamples, " total patient samples."))
-  #
   geneNames = colnames(datExpr) # list of genes :)
 
   sft = pickSoftThreshold(datExpr, powerVector = powers, verbose = 5, networkType = netType)
@@ -321,9 +294,7 @@ returningSoftThresholdPowerResults <- function(datExpr = datExpr, maxNumPowers =
   powerEstimate = sft$powerEstimate
   sftDF$recommendedPower = rep(powerEstimate, nrow(sftDF))
 
-  #sftThresholdingOutputNameCSV = paste0(wgcnaAndKMeansPathsForOutputs, "//softThresholdPowerDF_",netType, "_network_recommendedPower_",fullDiseaseName, "_", bodyRegion, outputAddOn, ".csv")
-  #sftThresholdingOutputNameRData = paste0(wgcnaAndKMeansPathsForOutputs, "//softThresholdPowerDF_",netType, "_network_recommendedPower_",fullDiseaseName, "_", bodyRegion, outputAddOn, ".RData")
-
+ 
   print(paste0("Please note that the Soft Threshold Power Data Frame has been written here: ", sftThresholdingOutputNameCSV))
   write.csv(sft$fitIndices, sftThresholdingOutputNameCSV)
   save(sftDF, powerEstimate, file = sftThresholdingOutputNameRData)
@@ -335,7 +306,7 @@ returningSoftThresholdPowerResults <- function(datExpr = datExpr, maxNumPowers =
     if(log2transformInputData && scaleInputData){ # (should we apply a log2(x+1) transform on data
       print(paste0("Please try setting scaleInputData = FALSE instead of TRUE and try this function again with a log2(x+1) transform only (on the gene expression data) instead."))
     }
-    break # return
+    break 
   }
 
 
@@ -551,8 +522,7 @@ pleaseGetCoexpressionNetworkForAWGCNAModuleAfterKmeans <- function(module,
     moduleInteractionsDF$analysis =  rep(paste0("WGCNA with KMeans (Results Calculated on Filtered List of Edges for ", module, " Module)"), nrow(moduleInteractionsDF))
 
   }
-  #dataScale = dataScaling,
-  #bodyRegionName = bodyRegion,
+
   moduleInteractionsDF$disease =  rep(diseaseName, nrow(moduleInteractionsDF))
   moduleInteractionsDF$tissue =  rep(tissueName, nrow(moduleInteractionsDF))
   moduleInteractionsDF$bodyRegion = rep(bodyRegionName, nrow(moduleInteractionsDF))
@@ -584,7 +554,6 @@ pleaseGetCoexpressionNetworkForAWGCNAModuleAfterKmeans <- function(module,
 
   wgcnaAndKmeansModuleCoexpressionNetworkForModuleTOMPercentileSummaryStatisticsCSV = paste0(wgcnaAndKMeansPathsForOutputs, "//Module_CoexpressionNetwork//", bodyRegion, "_wgcnaWithKmeans_Pow", powerEstimate, "_TOMPercentModSumStats_", module,outputAddOn,".RData")
 
-  #wgcnaAndKmeansModuleCoexpressionNetworkForModuleTOMPercentileSummaryStatisticsCSV = paste0(wgcnaAndKMeansPathsForOutputs, "//Module_CoexpressionNetwork//", bodyRegion, "_wgcnaWithKmeans_Pow", powerEstimate, "_TOMPercentileModuleSummaryStats_", module,outputAddOn,".csv")
   currentDate = as.character(now())
   write.csv(moduleInteractionsDF, wgcnaAndKmeansModuleCoexpressionNetworkForModuleALLInteractionsCSV)
   save(moduleInteractionsDF, currentDate, file = wgcnaAndKmeansModuleCoexpressionNetworkForModuleALLInteractionsRData)
@@ -650,9 +619,7 @@ pleaseGetTheGeneTraitSignificanceValuesForTheTraits <- function(datTraits,
     GSPvalue = as.data.frame(corPvalueStudent(as.matrix(geneTraitSignificance), nSamples));
     colnames(GSPvalue) = paste("GeneSignificancePValue_", weightName, sep="");
 
-    #names(geneTraitSignificance) = paste("GeneSignificance", weightName, sep="");
-    #names(GSPvalue) = paste("GeneSignificancePValue", weightName, sep="");
-    if (nrow(GSPvalueDF) == 0){
+      if (nrow(GSPvalueDF) == 0){
       GSPvalueDF = GSPvalue
 
     } else {
@@ -692,9 +659,6 @@ pleaseGetTheGeneTraitSignificanceValuesForTheTraits <- function(datTraits,
   rownames(GSPvalueDF)= GSPvalueDF[,1] #gene_names
   GSPvalueDF = GSPvalueDF[,-1]
   head(GSPvalueDF)
-  #colnames(clusterInfo) = c("module", "entrezID")
-
-
 
   write.csv(geneTraitSignificanceDF, wgcnaWithKmeansGeneTraitSignificancePath)
   write.csv(GSPvalueDF, wgcnaWithKmeansGeneTraitSigPValuePath)
@@ -890,7 +854,6 @@ molSigDBFunctionsEnrichment <- function(categoryName = "C1", powerVal = 10,
                                         parentName = "D:\\organizedAlzheimers\\enrichments\\outputs\\MolecularSignaturesDatabase\\",
 										kMeans = performAdditionalKMeansStep){
 
-  #colNum = grep(powerVal, colnames())
 
   m_t2g_C5 <- msigdbr(species = "Homo sapiens", category = categoryName) %>%
     dplyr::select(gs_name, entrez_gene)
@@ -926,17 +889,6 @@ molSigDBFunctionsEnrichment <- function(categoryName = "C1", powerVal = 10,
 
   uniqueMods = as.vector(unique(geneClusterDF[,colNum]))
 
-  #modName = uniqueMods[1]
-  # firstMod = as.vector(geneClusterDF[which(geneClusterDF$module == uniqueMods[1]),3])
-  # em <- enricher(firstMod, TERM2GENE=m_t2g_C5)
-  # emDF = data.frame(em)
-  # molecularSignaturesDatabase = rep(molSigDBHeading, nrow(emDF))
-  # module = rep(modName, nrow(emDF))
-  # power = rep(powerVal, nrow(emDF))
-  # emDF$molecularSignaturesDatabase = molecularSignaturesDatabase
-  # emDF$module = module
-  # emDF$power = power
-  # emDF$region = region
 
   C5_df = data.frame() #emDF
 
@@ -1198,18 +1150,8 @@ with_makevars(c(PKG_CFLAGS = "-std=c11"),
               assignment = "+=")
 
 
-#BiocManager::install("gsl")
-
 library(readxl)
 
-#install.packages("BiocManager")
-# BiocManager::install("DirichletMultinomial")
-# BiocManager::install("GenomicRanges")
-# BiocManager::install("GenomicFeatures")
-# BiocManager::install("GenomeInfoDb")
-# BiocManager::install("IRanges")
-# BiocManager::install("S4Vectors")
-# BiocManager::install("biomaRt")
 
 library("DirichletMultinomial")
 library("GenomicRanges")
@@ -1220,14 +1162,7 @@ library("S4Vectors")
 library("biomaRt")
 
 library("gsl")
-#BiocManager::install("GenomicInteractions")
 library("GenomicInteractions")
-
-# BiocManager::install("TFBSTools")
-# BiocManager::install("motifmatchr")
-# BiocManager::install("JASPAR2018")
-# BiocManager::install("BSgenome.Hsapiens.UCSC.hg19")
-# BiocManager::install("TxDb.Hsapiens.UCSC.hg19.knownGene")
 
 library("JASPAR2018")
 library("BSgenome.Hsapiens.UCSC.hg19")
@@ -1235,14 +1170,13 @@ library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 
 library("TFBSTools")
 library("motifmatchr")
-#library("JASPAR2018")
 library("BSgenome.Hsapiens.UCSC.hg19")
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 
 
 
 print(paste0(":) Please note that the code for scGRN comes from: https://github.com/daifengwanglab/scGRN/tree/master/R"))
-print("Please note that scGRN was written in Professor Daifeng Wang's Lab by Mufang Ying, Peter Rehani, and Professor Daifeng Wang")
+print("Please note that scGRN was written in Professor Daifeng Wang's Lab by Ting Jin, Peter Rehani, Mufang Ying, Jiawei Huang, Shuang Liu, Panagiotis Roussos & Professor Daifeng Wang")
 print("loading in functions...")
 
 scGRN_interaction = function(hic_interaction, enhancers, ref_promoters = 'all',up_stream = 2500,
@@ -1965,11 +1899,8 @@ gettingTheTFsForAChromosomeScGRNPart2 <- function(chromosomeNum, dfToUse = miniD
     print("Please note there was an error when we tried to turn the data object into a dataframe. :(")
     return(df_chrPart2) # we exit with error :(
   }
-  #df = data.frame(df)
-  #head(df)
+
   View(df)
-  #df$bodyRegion = rep(bodyRegion, nrow(df))
-  #df$otherInfo = rep(otherInfo, nrow(df))
 
   head(df)
   write.csv(df, outputNamesVec[1])
@@ -2128,7 +2059,6 @@ pleaseGetInteractionsDFForChromosome_haveEnhancerAndPromoterInteractionsData_Ste
 
 pleaseGetInteractionsDFForChromosome_haveHIC_PromoterAndEnhancerData <- function(chromName, chromatinInteraction_Step1_FilePath,
                                                                                  hic_interaction, enhancers, bodyRegion, caseInfo){
-  # haveEnhancersAndPromotersHICData = TRUE
   interactionsDF = chromosome_scGRNom_interactionInfo(chromName = chromName,
                                                       outputName = chromatinInteraction_Step1_FilePath,
                                                       hic_interaction, enhancers, bodyRegion)
@@ -2147,7 +2077,6 @@ pleaseGetInteractionsDFForChromosome_haveOnlyEnhancerData <- function(chromName,
                                                                       geneIDColumnNameEnhancerDF,
                                                                       enhancerRegionCol,
                                                                       pleaseOrganizeEnhancerRegions, caseInfo){
-  # haveEnhancersInteractionData = TRUE
   interactionsDF = chromosome_AdSNPhenoPromEnh_interactionInfo(chromName = chromName,
                                                                chromatinInteraction_Step1ADSNPheno_FilePath,
                                                                bodyRegion,
@@ -2183,7 +2112,6 @@ identifyingTFsInGeneExpressionDataSetOlder <- function(geneAndEntrezIDMappingDF,
   head(geneDataFrame)
 
   head(tfsDF)
-  #colnames(tfsDF) = c("TFs", "entrezID")
 
   tfsInGeneExpressionData = inner_join(geneDataFrame,tfsDF,
                                        by="entrezID")#c("geneExpressionName" = "geneSymbolName"))#Customer.ID")
@@ -2192,12 +2120,10 @@ identifyingTFsInGeneExpressionDataSetOlder <- function(geneAndEntrezIDMappingDF,
   geneExpressionIds = as.vector(geneDataFrame[,2])
   tfsInGeneExpressionData_Names = as.vector(tfsInGeneExpressionData$geneName)
 
-  #intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec)
   tfsFound = intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec) #which(tfsInGeneExpressionData_Names %in% geneExpressionSamplesVec)
   print(paste0(":) Please note that ", length(tfsFound), " TFs are found in the gene expression data set"))
 
-  geneSymbolsOfTFs = tfsFound#tfsInGeneExpressionData_Names[tfsFound,] # unique(as.vector(geneExpressionSamplesVec[tfsFound]))
-  #geneExpressionSamplesVec[tfsFound]
+  geneSymbolsOfTFs = tfsFound
   return(geneSymbolsOfTFs)
 }
 
@@ -2217,7 +2143,6 @@ identifyingTFsInGeneExpressionDataSetOlder2 <- function(geneAndEntrezIDMappingDF
   head(geneDataFrame)
 
   head(tfsDF)
-  #colnames(tfsDF) = c("TFs", "entrezID")
 
   tfsInGeneExpressionData_Part1 = inner_join(geneDataFrame,tfsDF,
                                        by="entrezID")#c("geneExpressionName" = "geneSymbolName"))#Customer.ID")
@@ -2243,12 +2168,10 @@ identifyingTFsInGeneExpressionDataSetOlder2 <- function(geneAndEntrezIDMappingDF
   tfsInGeneExpressionData
   tfsInGeneExpressionData_Names = as.vector(tfsInGeneExpressionData$geneName)
 
-  #intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec)
   tfsFound = intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec) #which(tfsInGeneExpressionData_Names %in% geneExpressionSamplesVec)
   print(paste0(":) Please note that ", length(tfsFound), " TFs are found in the gene expression data set"))
 
-  geneSymbolsOfTFs = tfsFound#tfsInGeneExpressionData_Names[tfsFound,] # unique(as.vector(geneExpressionSamplesVec[tfsFound]))
-  #geneExpressionSamplesVec[tfsFound]
+  geneSymbolsOfTFs = tfsFound
   return(geneSymbolsOfTFs)
 }
 
@@ -2268,7 +2191,6 @@ identifyingTFsInGeneExpressionDataSetolderr <- function(geneAndEntrezIDMappingDF
   head(geneDataFrame)
 
   head(tfsDF)
-  #colnames(tfsDF) = c("TFs", "entrezID")
 
   tfsInGeneExpressionData_Part1 = inner_join(geneDataFrame,tfsDF,
                                              by="entrezID")#c("geneExpressionName" = "geneSymbolName"))#Customer.ID")
@@ -2284,25 +2206,10 @@ identifyingTFsInGeneExpressionDataSetolderr <- function(geneAndEntrezIDMappingDF
   part2 = tfsInGeneExpressionData_Part2[,c(1,2)]
 
   tfsToUseVec = unique(c(part1[,1], part2[,1]))
-  #colnames(part1) = c("geneName", "entrezID")
-  #colnames(part2) = c("geneName", "entrezID")
-  #tfsInGeneExpressionData = unique(rbind(part1, part2))
-  #head(part1)
-  #dim(part1)
-  #dim(part2)
-  #dim(tfsInGeneExpressionData)
-  #head(tfsInGeneExpressionData_Part2)
-  #head(tfsInGeneExpressionData_Part1)
-  #geneExpressionIds = as.vector(geneDataFrame[,2])
-  #tfsInGeneExpressionData
-  #tfsInGeneExpressionData_Names = as.vector(tfsInGeneExpressionData$geneName)
+   print(paste0(":) Please note that ", length(tfsToUseVec), " TFs are found in the gene expression data set"))
 
-  #intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec)
-  #tfsFound = intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec) #which(tfsInGeneExpressionData_Names %in% geneExpressionSamplesVec)
-  print(paste0(":) Please note that ", length(tfsToUseVec), " TFs are found in the gene expression data set"))
-
-  geneSymbolsOfTFs = tfsToUseVec #tfsFound#tfsInGeneExpressionData_Names[tfsFound,] # unique(as.vector(geneExpressionSamplesVec[tfsFound]))
-  #geneExpressionSamplesVec[tfsFound]
+  geneSymbolsOfTFs = tfsToUseVec
+  
   tfsToUseVec = str_replace_all(tfsToUseVec, "-", ".")
 
   geneSymbolsOfTFs = intersect(geneExpressionSamplesVec, tfsToUseVec) #tfsFound#tfsInGeneExpressionData_Names[tfsFound,] # unique(as.vector(geneExpressionSamplesVec[tfsFound]))
@@ -2330,7 +2237,7 @@ identifyingTFsInGeneExpressionDataSet <- function(geneAndEntrezIDMappingDF,
   head(geneDataFrame)
 
   head(tfsDF)
-  #colnames(tfsDF) = c("TFs", "entrezID")
+
 
   tfsInGeneExpressionData_Part1 = inner_join(geneDataFrame,tfsDF,
                                              by="entrezID")#c("geneExpressionName" = "geneSymbolName"))#Customer.ID")
@@ -2346,25 +2253,8 @@ identifyingTFsInGeneExpressionDataSet <- function(geneAndEntrezIDMappingDF,
   part2 = tfsInGeneExpressionData_Part2[,c(1,2)]
 
   tfsToUseVec = unique(c(part1[,1], part2[,1]))
-  #colnames(part1) = c("geneName", "entrezID")
-  #colnames(part2) = c("geneName", "entrezID")
-  #tfsInGeneExpressionData = unique(rbind(part1, part2))
-  #head(part1)
-  #dim(part1)
-  #dim(part2)
-  #dim(tfsInGeneExpressionData)
-  #head(tfsInGeneExpressionData_Part2)
-  #head(tfsInGeneExpressionData_Part1)
-  #geneExpressionIds = as.vector(geneDataFrame[,2])
-  #tfsInGeneExpressionData
-  #tfsInGeneExpressionData_Names = as.vector(tfsInGeneExpressionData$geneName)
-
-  #intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec)
-  #tfsFound = intersect(tfsInGeneExpressionData_Names, geneExpressionSamplesVec) #which(tfsInGeneExpressionData_Names %in% geneExpressionSamplesVec)
   print(paste0(":) Please note that ", length(tfsToUseVec), " TFs are found in the gene expression data set"))
 
-  #geneSymbolsOfTFs = tfsToUseVec #tfsFound#tfsInGeneExpressionData_Names[tfsFound,] # unique(as.vector(geneExpressionSamplesVec[tfsFound]))
-  #geneExpressionSamplesVec[tfsFound]
   length(tfsToUseVec)
   geneSymbolsOfTFs = intersect(geneExpressionSamplesVec, tfsToUseVec) #tfsFound#tfsInGeneExpressionData_Names[tfsFound,] # unique(as.vector(geneExpressionSamplesVec[tfsFound]))
   if (length(geneSymbolsOfTFs) < length(tfsToUseVec)){
@@ -2442,8 +2332,6 @@ write.csv(geneModuleMembership, geneModMembershipOutputNameCSV)
 
     head(MMP_Alzh)
 
-    #condition = "Alzheimers"
-    #View(MMP_Alzh)
     geneNames = as.vector(MMP_Alzh[,1])
     moduleColumn = grep(paste0("\\b", moduleName, "\\b"), colnames(MMP_Alzh))[1]
     MMP_moduleBlack = MMP_Alzh[,moduleColumn]#grep(paste0("\\b", moduleName, "\\b"), colnames(MMP_Alzh))[1]# MMP_Alzh$black
@@ -2486,7 +2374,6 @@ write.csv(geneModuleMembership, geneModMembershipOutputNameCSV)
     head(mra_blackDF)
 
     blackGenes
-    #"MRA_forModule", "region", "info", "phenotype", "hits"
 
     bodyRegion
 
@@ -2669,11 +2556,6 @@ pleaseGetDatTraitsPhenotypesFile <- function(geneExpressionOutputNameRData, phen
 	traitRows = traitRows[which(!isNA(traitRows))]
 	length(traitRows)
 
-	#names(binaryTraits)
-	#[1] "Patient"       "controlStage"  "initialStage"  "moderateStage" "severeStage"
-	#rownames(datTraits) = allTraits[traitRows, 1];
-	#datTraits = allTraits[traitRows, -1];
-
 	rownames(datTraits) = diseaseTraits[traitRows, 1];
 
 
@@ -2710,29 +2592,18 @@ print(paste0("tomPowerOutputNameRData: ", tomPowerOutputNameRData))
 
 geneModMembershipOutputNameCSV = paste0(geneModuleMembershipFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_geneModuleMembershipCorr", outputAddOn, ".csv")
 print(paste0("geneModMembershipOutputNameCSV: ", geneModMembershipOutputNameCSV))
-#geneModMembershipOutputNameCSV = "F://organizedAlzheimers//ADSNPhenoOutputs//Alzheimers_Brain_Hippocampus//WGCNA_and_kMeansAfter_Outputs//WGCNAThenKMeans//GeneModuleMembership//WGCNA_withKMeans_signed_power37_geneModuleMembership_log2Tran_ThenScaledInput"
 mmpOutputNameCSV = paste0(geneModuleMembershipFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_MMPvalues", outputAddOn, ".csv")
 print(paste0("mmpOutputNameCSV: ", mmpOutputNameCSV))
 
 modTraitCorrelationOutputNameCSV = paste0(modulePhenoAssociationFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_moduleTraitCorrs", outputAddOn, ".csv")
 modTraitCorrPValOutputNameCSV = paste0(modulePhenoAssociationFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_moduleTraitCorrPValue", outputAddOn, ".csv")
 
-#modTraitCorrelationOutputNameCSV = paste0(wgcnaToAdd,netType, "_pow",powerEstimate, "_moduleTraitCorrs", outputAddOn, ".csv")
-#modTraitCorrPValOutputNameCSV = paste0(wgcnaToAdd,netType, "_pow",powerEstimate, "_moduleTraitCorrPValue", outputAddOn, ".csv")
-
-
-
 print(paste0("modTraitCorrelationOutputNameCSV: ", modTraitCorrelationOutputNameCSV))
 print(paste0("modTraitCorrPValOutputNameCSV: ", modTraitCorrPValOutputNameCSV))
-
-#modTraitCorrAndCorrPValueOutputNameRData = paste0(wgcnaToAdd,netType, "_pow",powerEstimate, "_moduleTraitCorrAndP", outputAddOn, ".RData")
-#signifModTraitCorrelationOutputNameCSV = paste0(wgcnaToAdd,netType, "_pow",powerEstimate, "_StatSignifModuleTraitCorr_Thresh", pValueCutOffForSignificance, outputAddOn, ".csv")
-
 
 modTraitCorrAndCorrPValueOutputNameRData = paste0(modulePhenoAssociationFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_moduleTraitCorrAndP", outputAddOn, ".RData")
 signifModTraitCorrelationOutputNameCSV = paste0(modulePhenoAssociationFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_StatSignifModulePhenoCorr_Thresh", pValueCutOffForSignificance, outputAddOn, ".csv")
 
-#posCorsOnlyModuleTraitsOutputNameCSV = paste0(modulePhenoAssociationFilePath, wgcnaToAdd,netType, "_pow",powerEstimate, "_StatSignifModulePhenoCorr_Thresh", pValueCutOffForSignificance, outputAddOn, ".csv")
 posCorsOnlyModuleTraitsOutputNameCSV = paste0(modulePhenoAssociationFilePath, "wgcna_with_kmeans_Power", powerEstimate, "_StatisticallySignificantModuleTraitCorrelations_POSITIVEonly_.csv")
 
 
@@ -2741,7 +2612,6 @@ print(paste0("modTraitCorrAndCorrPValueOutputNameRData: ", modTraitCorrAndCorrPV
 print(paste0("signifModTraitCorrelationOutputNameCSV: ", signifModTraitCorrelationOutputNameCSV))
 
 updatedModuleTraitPhenotypeDFFilePath = paste0(modulePhenoAssociationFilePath, wgcnaToAdd, bodyRegion, "_", powerEstimate, "_StatSignificantModulePhenoCorrs_CombinedInfo",outputAddOn,".csv")
-#updatedModuleTraitPhenotypeDFFilePath = paste0(wgcnaToAdd, bodyRegion, "_", powerEstimate, "_StatisticallySignificantModuleTraitCorrelations_CombinedInformation",outputAddOn,".csv")
 
 print(paste0("updatedModuleTraitPhenotypeDFFilePath: ", updatedModuleTraitPhenotypeDFFilePath))
 
@@ -2823,16 +2693,6 @@ if (performAdditionalKMeansStep){
  allNetworkModulesCombinedTomSummaryStatisticsFileName = paste0(wgcnaAndKMeansOutputPath, "//", bodyRegion, "_wgcnaOnly_Power", powerEstimate, "finalCombo_CoExpressNetSummaryStats_forAllModules",outputAddOn,".csv")
 }
 
-
-
-
-
-#if (performAdditionalKMeansStep){
- # allNetworkModulesCombinedTomSummaryStatisticsFileName = paste0(wgcnaAndKMeansOutputPath, "//", bodyRegion, "_wgcnaWith_kmeans_Power", powerEstimate, "finalCombo_CoExpressNetSummaryStats_forAll_", length(uniqueModules), "_Modules",outputAddOn,".csv")
-#} else {
-#  allNetworkModulesCombinedTomSummaryStatisticsFileName = paste0(wgcnaAndKMeansOutputPath, "//", bodyRegion, "_wgcnaOnly_Power", powerEstimate, "finalCombo_CoExpressNetSummaryStats_forAll_", length(uniqueModules), "_Modules",outputAddOn,".csv")
-
-#}
 
 
 moduleEnrichmentsFilePath = paste0(pathForWGCNA, "//ModuleEnrichments")
@@ -3329,7 +3189,6 @@ findingModulePhenotypeCorrelationsAndPValues <- function(MEs,
   
   
   setwd(modulePhenoAssociationFilePath)
-  getwd()
   if (performAdditionalKMeansStep){
     info = "WGCNA with kMeans Applied"
   } else {
@@ -4335,3 +4194,800 @@ pleaseGet_RTN_GeneRegulatoryNetwork <- function(tfsInGeneExpressionDataRData,
   
 }
 
+
+# Please note that the code below on Decision Curve Analysis is from the Memorial
+# Sloan Kettering Cancer Center:
+dca <- function(data, outcome, predictors, xstart=0.01, xstop=0.99, xby=0.01,
+                ymin=-0.05, probability=NULL, harm=NULL,graph=TRUE, intervention=FALSE,
+                interventionper=100, smooth=FALSE,loess.span=0.10, context = "") {
+
+  print(paste0(":) Please note that this code on DCA (Decision Curve Analysis) is directly from the Memorial Sloan Kettering Cancer Center (MSKCC): https://www.mskcc.org/departments/epidemiology-biostatistics/biostatistics/decision-curve-analysis"))
+  # LOADING REQUIRED LIBRARIES
+  require(stats)
+
+  # data MUST BE A DATA FRAME
+  if (class(data)!="data.frame") {
+    stop("Input data must be class data.frame")
+  }
+
+  #ONLY KEEPING COMPLETE CASES
+  data=data[complete.cases(data[append(outcome,predictors)]),append(outcome,predictors)]
+
+  # outcome MUST BE CODED AS 0 AND 1
+  if (max(data[[outcome]])>1 | min(data[[outcome]])<0) {
+    stop("outcome cannot be less than 0 or greater than 1")
+  }
+  # xstart IS BETWEEN 0 AND 1
+  if (xstart<0 | xstart>1) {
+    stop("xstart must lie between 0 and 1")
+  }
+
+  # xstop IS BETWEEN 0 AND 1
+  if (xstop<0 | xstop>1) {
+    stop("xstop must lie between 0 and 1")
+  }
+
+  # xby IS BETWEEN 0 AND 1
+  if (xby<=0 | xby>=1) {
+    stop("xby must lie between 0 and 1")
+  }
+
+  # xstart IS BEFORE xstop
+  if (xstart>=xstop) {
+    stop("xstop must be larger than xstart")
+  }
+
+  #STORING THE NUMBER OF PREDICTORS SPECIFIED
+  pred.n=length(predictors)
+
+  #IF probability SPECIFIED ENSURING THAT EACH PREDICTOR IS INDICATED AS A YES OR NO
+  if (length(probability)>0 & pred.n!=length(probability)) {
+    stop("Number of probabilities specified must be the same as the number of predictors being checked.")
+  }
+
+  #IF harm SPECIFIED ENSURING THAT EACH PREDICTOR HAS A SPECIFIED HARM
+  if (length(harm)>0 & pred.n!=length(harm)) {
+    stop("Number of harms specified must be the same as the number of predictors being checked.")
+  }
+
+  #INITIALIZING DEFAULT VALUES FOR PROBABILITES AND HARMS IF NOT SPECIFIED
+  if (length(harm)==0) {
+    harm=rep(0,pred.n)
+  }
+  if (length(probability)==0) {
+    probability=rep(TRUE,pred.n)
+  }
+
+
+  #CHECKING THAT EACH probability ELEMENT IS EQUAL TO YES OR NO,
+  #AND CHECKING THAT PROBABILITIES ARE BETWEEN 0 and 1
+  #IF NOT A PROB THEN CONVERTING WITH A LOGISTIC REGRESSION
+  for(m in 1:pred.n) {
+    if (probability[m]!=TRUE & probability[m]!=FALSE) {
+      stop("Each element of probability vector must be TRUE or FALSE")
+    }
+    if (probability[m]==TRUE & (max(data[predictors[m]])>1 | min(data[predictors[m]])<0)) {
+      stop(paste(predictors[m],"must be between 0 and 1 OR sepcified as a non-probability in the probability option",sep=" "))
+    }
+    if(probability[m]==FALSE) {
+      model=NULL
+      pred=NULL
+      model=glm(data.matrix(data[outcome]) ~ data.matrix(data[predictors[m]]), family=binomial("logit"))
+      pred=data.frame(model$fitted.values)
+      pred=data.frame(pred)
+      names(pred)=predictors[m]
+      data=cbind(data[names(data)!=predictors[m]],pred)
+      print(paste(predictors[m],"converted to a probability with logistic regression. Due to linearity assumption, miscalibration may occur.",sep=" "))
+    }
+  }
+
+  # THE PREDICTOR NAMES CANNOT BE EQUAL TO all OR none.
+  if (length(predictors[predictors=="all" | predictors=="none"])) {
+    stop("Prediction names cannot be equal to all or none.")
+  }
+
+  #########  CALCULATING NET BENEFIT   #########
+  N=dim(data)[1]
+  event.rate=colMeans(data[outcome])
+
+  # CREATING DATAFRAME THAT IS ONE LINE PER THRESHOLD PER all AND none STRATEGY
+  nb=data.frame(seq(from=xstart, to=xstop, by=xby))
+  names(nb)="threshold"
+  interv=nb
+
+  nb["all"]=event.rate - (1-event.rate)*nb$threshold/(1-nb$threshold)
+  nb["none"]=0
+
+  # CYCLING THROUGH EACH PREDICTOR AND CALCULATING NET BENEFIT
+  for(m in 1:pred.n){
+    for(t in 1:length(nb$threshold)){
+      # COUNTING TRUE POSITIVES AT EACH THRESHOLD
+      tp=mean(data[data[[predictors[m]]]>=nb$threshold[t],outcome])*sum(data[[predictors[m]]]>=nb$threshold[t])
+      # COUNTING FALSE POSITIVES AT EACH THRESHOLD
+      fp=(1-mean(data[data[[predictors[m]]]>=nb$threshold[t],outcome]))*sum(data[[predictors[m]]]>=nb$threshold[t])
+      #setting TP and FP to 0 if no observations meet threshold prob.
+      if (sum(data[[predictors[m]]]>=nb$threshold[t])==0) {
+        tp=0
+        fp=0
+      }
+
+      # CALCULATING NET BENEFIT
+      nb[t,predictors[m]]=tp/N - fp/N*(nb$threshold[t]/(1-nb$threshold[t])) - harm[m]
+    }
+    interv[predictors[m]]=(nb[predictors[m]] - nb["all"])*interventionper/(interv$threshold/(1-interv$threshold))
+  }
+
+  # CYCLING THROUGH EACH PREDICTOR AND SMOOTH NET BENEFIT AND INTERVENTIONS AVOIDED
+  for(m in 1:pred.n) {
+    if (smooth==TRUE){
+      lws=loess(data.matrix(nb[!is.na(nb[[predictors[m]]]),predictors[m]]) ~ data.matrix(nb[!is.na(nb[[predictors[m]]]),"threshold"]),span=loess.span)
+      nb[!is.na(nb[[predictors[m]]]),paste(predictors[m],"_sm",sep="")]=lws$fitted
+
+      lws=loess(data.matrix(interv[!is.na(nb[[predictors[m]]]),predictors[m]]) ~ data.matrix(interv[!is.na(nb[[predictors[m]]]),"threshold"]),span=loess.span)
+      interv[!is.na(nb[[predictors[m]]]),paste(predictors[m],"_sm",sep="")]=lws$fitted
+    }
+  }
+
+  # PLOTTING GRAPH IF REQUESTED
+  if (graph==TRUE) {
+    require(graphics)
+
+    # PLOTTING INTERVENTIONS AVOIDED IF REQUESTED
+    if(intervention==TRUE) {
+      # initialize the legend label, color, and width using the standard specs of the none and all lines
+      legendlabel <- NULL
+      legendcolor <- NULL
+      legendwidth <- NULL
+      legendpattern <- NULL
+
+      #getting maximum number of avoided interventions
+      ymax=max(interv[predictors],na.rm = TRUE)
+
+      #INITIALIZING EMPTY PLOT WITH LABELS
+      plot(x=nb$threshold, y=nb$all, type="n" ,xlim=c(xstart, xstop), ylim=c(ymin, ymax), xlab="Threshold probability", ylab=paste("Net reduction in interventions per",interventionper,"patients"))
+
+      #PLOTTING INTERVENTIONS AVOIDED FOR EACH PREDICTOR
+      for(m in 1:pred.n) {
+        if (smooth==TRUE){
+          lines(interv$threshold,data.matrix(interv[paste(predictors[m],"_sm",sep="")]),col=m,lty=2)
+        } else {
+          lines(interv$threshold,data.matrix(interv[predictors[m]]),col=m,lty=2)
+        }
+
+        # adding each model to the legend
+        legendlabel <- c(legendlabel, predictors[m])
+        legendcolor <- c(legendcolor, m)
+        legendwidth <- c(legendwidth, 1)
+        legendpattern <- c(legendpattern, 2)
+      }
+    } else {
+      # PLOTTING NET BENEFIT IF REQUESTED
+
+      # initialize the legend label, color, and width using the standard specs of the none and all lines
+      legendlabel <- c("None", "All")
+      legendcolor <- c(17, 8)
+      legendwidth <- c(2, 2)
+      legendpattern <- c(1, 1)
+
+      #getting maximum net benefit
+      ymax=max(nb[names(nb)!="threshold"],na.rm = TRUE)
+
+      # inializing new benfit plot with treat all option
+      plot(x=nb$threshold, y=nb$all, type="l", col=8, lwd=2 ,xlim=c(xstart, xstop), ylim=c(ymin, ymax),
+           xlab="Threshold probability", ylab="Net benefit", main = context)
+      # adding treat none option
+      lines(x=nb$threshold, y=nb$none,lwd=2)
+      #PLOTTING net benefit FOR EACH PREDICTOR
+      for(m in 1:pred.n) {
+        if (smooth==TRUE){
+          lines(nb$threshold,data.matrix(nb[paste(predictors[m],"_sm",sep="")]),col=m,lty=2)
+        } else {
+          lines(nb$threshold,data.matrix(nb[predictors[m]]),col=m,lty=2)
+        }
+        # adding each model to the legend
+        legendlabel <- c(legendlabel, predictors[m])
+        legendcolor <- c(legendcolor, m)
+        legendwidth <- c(legendwidth, 1)
+        legendpattern <- c(legendpattern, 2)
+      }
+    }
+    # then add the legend
+    legend("topright", legendlabel, cex=0.8, col=legendcolor, lwd=legendwidth, lty=legendpattern)
+
+  }
+
+  #RETURNING RESULTS
+  results=list()
+  results$N=N
+  results$predictors=data.frame(cbind(predictors,harm,probability))
+  names(results$predictors)=c("predictor","harm.applied","probability")
+  results$interventions.avoided.per=interventionper
+  results$net.benefit=nb
+  results$interventions.avoided=interv
+
+  return(results)
+
+}
+
+
+
+
+
+pleaseGetInitialFilePathDerivationsAndInfoObjectsForWGCNA <- function(outputPathNameADSNPhenoOutputs, inputGeneExpressionDataFilePath,
+disease, tissueName,
+bodyRegion, tfsUsed,
+performAdditionalKMeansStep,
+phenotypesFilePath, log2transformInputData,
+scaleInputData, includeTimeStamp, numberOfRoundingDigits, netType){
+print(":) Please note that this function takes in initial user input and helps us store the file paths and other key variables that we may need for our analysis.") 
+numOfRoundingDigits = numberOfRoundingDigits
+
+pipeline = "ADSNPheno"
+fullDiseaseName = paste0(disease, "Disease")
+print(paste0(":) please note body region = ", bodyRegion))
+library(stringr)
+
+print(paste0(":) please note the key output directory (folder) is: outputPathNameADSNPhenoOutputs = ", outputPathNameADSNPhenoOutputs))
+# please create a folder within ADSNPhenoOutputs, which will have the results of pipeline for Hippocampus Ca1 here
+folderName = str_replace_all(paste0(disease, "_", tissueName, "_", bodyRegion), " ", "")
+dir.create(folderName)
+print(paste0("outputPathNameADSNPhenoOutputs: ", outputPathNameADSNPhenoOutputs))
+
+mainOutputFolder = paste0(
+  outputPathNameADSNPhenoOutputs, folderName)
+dir.create(mainOutputFolder, showWarnings = FALSE)
+
+print(paste0(":) Please note that a directory (folder) has been created here: ",
+             mainOutputFolder, " for all of the output of ADSNPheno"))
+
+
+
+filePathInfoDF_FileNameRData = paste0(mainOutputFolder, "//fileInfoDF_", pipeline, "_",folderName, ".RData")
+filePathInfoDF_FileNameCSV = paste0(mainOutputFolder, "//fileInfoDF_", pipeline, "_",folderName, ".csv")
+tfsInGeneExpressionDataCSV = paste0(mainOutputFolder, "//tfsInGeneExpressionDataset_",tfsUsed, "_", folderName, ".csv")
+tfsInGeneExpressionDataRData = paste0(mainOutputFolder, "//tfsInGeneExpressionDataset_",tfsUsed, "_", folderName, ".RData")
+
+if(isTRUE(performAdditionalKMeansStep)){
+  wgcnaAndKMeansOutputPath = paste0(mainOutputFolder, "//", "WGCNAandKMeansAfter")
+  print(paste0("Please note that since performAdditionalKMeansStep = ", performAdditionalKMeansStep,
+               " we will store the results of the Co-Expression Network by WGCNA with an additional K-Means step after",
+               " in this directory (folder): ", wgcnaAndKMeansOutputPath))
+
+  wgcnaToAdd = "//WGCNAWithKMeans"
+
+} else {
+  wgcnaAndKMeansOutputPath = paste0(mainOutputFolder, "//", "WGCNA_Only_Outputs")
+  print(paste0("Please note that since performAdditionalKMeansStep = ", performAdditionalKMeansStep,
+               " we will store the results of the Co-Expression Network by WGCNA only ",
+               " in this directory (folder): ", wgcnaAndKMeansOutputPath))
+
+  wgcnaToAdd = "//WGCNA_Only_"
+
+}
+dir.create(wgcnaAndKMeansOutputPath, showWarnings = FALSE)
+datTraitsRDataFilePath = paste0(mainOutputFolder, "//datTraitsPhenotypeInfo_", folderName, ".RData")
+
+
+# file path for storing filePaths related to the power used for WGCNA
+powerRelatedFilePathsRData = paste0(wgcnaAndKMeansOutputPath, "//rDataOfTheFilePathInfoBasedOnWGCNAPower_", folderName, ".RData")
+print(paste0(":) Please note that we will store the information on the file paths for the RData related to the WGCNA power selected for ",
+             folderName, " here: ", powerRelatedFilePathsRData))
+			 
+# file path for the gene expression data
+
+geneExpressionPreparationFilePath = paste0(wgcnaAndKMeansOutputPath, "//GeneExpressionPreparation")
+print(paste0("geneExpressionPreparationFilePath: ", geneExpressionPreparationFilePath))
+dir.create(geneExpressionPreparationFilePath, showWarnings = FALSE)
+
+#final gene expression:
+finalGeneExpressionPreparationFilePath = paste0(geneExpressionPreparationFilePath, "//finalGeneExpressionData")
+print(paste0("finalGeneExpressionPreparationFilePath: ", finalGeneExpressionPreparationFilePath))
+dir.create(finalGeneExpressionPreparationFilePath, showWarnings = FALSE)
+
+
+# file path for the entrez ID mapping info
+entrezMappingFilePath = paste0(wgcnaAndKMeansOutputPath, "//EntrezMappingInfo")
+print(paste0("entrezMappingFilePath: ", entrezMappingFilePath))
+dir.create(entrezMappingFilePath, showWarnings = FALSE)
+
+# file path for the soft thresholding power info
+softThresholdPowerFilePath = paste0(wgcnaAndKMeansOutputPath, "//SoftThresholdPowerAnalysis")
+print(paste0("softThresholdPowerFilePath: ", softThresholdPowerFilePath))
+dir.create(softThresholdPowerFilePath, showWarnings = FALSE)
+
+
+# file path for the Topological Overlap Matrix Info
+tomFilePath = paste0(wgcnaAndKMeansOutputPath, "//TopologicalOverlapMatrix")
+print(paste0("tomFilePath: ", tomFilePath))
+dir.create(tomFilePath, showWarnings = FALSE)
+
+
+# file path for WGCNA only
+wgcnaFilePath = paste0(wgcnaAndKMeansOutputPath, "//WGCNAOnly")
+print(paste0("wgcnaFilePath: ", wgcnaFilePath))
+dir.create(wgcnaFilePath, showWarnings = FALSE)	
+
+
+# file path for WGCNA and Kmeans after
+if (isTRUE(performAdditionalKMeansStep)){
+  wgcnaWithKMeansAfterFilePath = paste0(wgcnaAndKMeansOutputPath, "//WGCNAThenKMeans")
+  pathForWGCNA = wgcnaWithKMeansAfterFilePath
+  print(paste0("wgcnaWithKMeansAfterFilePath: ", wgcnaWithKMeansAfterFilePath))
+  dir.create(wgcnaWithKMeansAfterFilePath, showWarnings = FALSE)
+  print(paste0(":) please note that the outputs for ", bodyRegion,
+               " WGCNA Gene Co-Expression Analysis with K-Means after will be written here: ", wgcnaWithKMeansAfterFilePath))
+
+} else {
+  print(paste0(":) since performAdditionalKMeansStep is False, no K-means step will be performed afterwards.  Instead, please note that the outputs for ", bodyRegion,
+               " WGCNA Gene Co-Expression Analysis Only after will be written here: ", wgcnaFilePath))
+  pathForWGCNA = wgcnaFilePath
+
+}
+
+MEsFilePath = paste0(pathForWGCNA, "//ModuleEigengenes")
+moduleAssignmentsFilePath = paste0(pathForWGCNA, "//ModuleAssignments")
+geneModuleMembershipFilePath = paste0(pathForWGCNA, "//GeneModuleMembership")
+
+allObjectsFilePath = paste0(pathForWGCNA, "//AllObjects")
+dir.create(allObjectsFilePath, showWarnings = FALSE)
+
+
+phenotypeAssociationFilePath = paste0(pathForWGCNA, "//PhenoCorrs")
+dir.create(phenotypeAssociationFilePath, showWarnings = FALSE)
+
+modulePhenoAssociationFilePath = paste0(phenotypeAssociationFilePath, "//ModulePhenoCorrs")
+genePhenoAssociationFilePath = paste0(phenotypeAssociationFilePath, "//GenePhenoCorrs")
+dir.create(modulePhenoAssociationFilePath, showWarnings = FALSE)
+dir.create(genePhenoAssociationFilePath, showWarnings = FALSE)
+
+
+
+print(paste0(":) MEsFilePath: ", MEsFilePath))
+print(paste0(":) moduleAssignmentsFilePath: ", moduleAssignmentsFilePath))
+print(paste0(":) geneModuleMembershipFilePath: ", geneModuleMembershipFilePath))
+
+print(paste0(":) phenotypeAssociationFilePath: ", phenotypeAssociationFilePath))
+print(paste0(":) modulePhenoAssociationFilePath: ", modulePhenoAssociationFilePath))
+print(paste0(":) genePhenoAssociationFilePath: ", genePhenoAssociationFilePath))
+
+
+
+dir.create(MEsFilePath, showWarnings = FALSE)
+dir.create(moduleAssignmentsFilePath, showWarnings = FALSE)
+dir.create(geneModuleMembershipFilePath, showWarnings = FALSE)
+
+# Step 2:  How to construct co-expression network and modules (WGCNA and K-means too).  Define parameters
+#wgcnaAndKMeansOutputPath = "F://organizedAlzheimers//GeneExpressionPreparation//outputs"
+
+# :) Please note that this R file by Saniya has all the parameters we need
+
+diseaseTraits = read.csv(phenotypesFilePath, header = TRUE)
+
+newDate = str_replace_all(Sys.Date(), "-", "_")
+
+
+
+######### Please note the function
+if (log2transformInputData == "TRUE"){
+  if (scaleInputData == "TRUE"){
+    outputAddOn = "_log2AndScaledInput"
+    print(":) Please note we will apply a Log2(x+1) transformation on the input gene expression data and then will scale that.")
+    print(":) This final data set will be our input for WGCNA")
+    dataScaling = "log2TransformedAndScaledGeneExpression" #  <-- will come from WGCNA
+    dataScalingOutputMini = "Log2AndScaledGeneExpress"
+
+  } else {
+    outputAddOn = "_log2InputOnly"
+    print(":) Please note we will apply a Log2(x+1) transformation on the input gene expression data.")
+    print(":) This final data set will be our input for WGCNA")
+    dataScaling = "log2TransGeneExpOnly" #  <-- will come from WGCNA
+    dataScalingOutputMini = "Log2TransformedGeneExpress"
+  }
+} else if (scaleInputData == "TRUE"){
+  outputAddOn = "_ScaledInputOnly"
+  print(":) Please note we will apply a Scale transformation on the input gene expression data.")
+  print(":) This final data set will be our input for WGCNA")
+  dataScaling = "ScaledGeneExpOnly" #  <-- will come from WGCNA
+  dataScalingOutputMini = "ScaledGeneExpressInput"
+} else {
+  outputAddOn = "_OriginalInputData"
+  print(":) Please note we will use our original input gene expression dataset for WGCNA.")
+  dataScaling = "originalGeneExpression" #  <-- will come from WGCNA
+  dataScalingOutputMini = "OriginalGeneExpress"
+
+
+}
+
+
+geneToEntrezIDPathForGeneExpressionDataRData = paste0(entrezMappingFilePath, "//geneToEntrezIDMapping_",
+                                                      disease, "_", bodyRegion, ".RData")
+
+
+geneToEntrezIDPathForGeneExpressionDataCSV = paste0(entrezMappingFilePath, "//geneToEntrezIDMapping_",
+                                                    disease, "_", bodyRegion, ".csv")
+
+
+originalGeneFilteredCSV = paste0(geneExpressionPreparationFilePath, "//geneExpressionData_",
+                                 disease, "_", bodyRegion, "afterFilteringZeroGenes.csv")
+
+originalGeneFilteredRData = paste0(geneExpressionPreparationFilePath, "//geneExpressionData_",
+                                   disease, "_", bodyRegion, "afterFilteringZeroGenes.RData")
+
+
+updatedOutputAddOn = paste0(finalGeneExpressionPreparationFilePath, "//finalGeneExpressionDataAndDatExpr_",
+                            disease, "_", bodyRegion, outputAddOn, ".csv" )
+
+filePathOfGeneExpressionDataUsedByWGCNA = updatedOutputAddOn #updatedOutputAddOnAndDatExpr
+
+updatedOutputAddOnAndDatExpr = paste0(finalGeneExpressionPreparationFilePath, "//finalGeneExpressionDataDatExpr_",
+                                      disease, "_", bodyRegion, outputAddOn, ".csv" )
+
+
+sftThresholdingOutputNameCSV = paste0(softThresholdPowerFilePath, "//softThresholdPowerDF_",netType, "_network_recommendedPower_",disease, "_", bodyRegion, outputAddOn, ".csv")
+sftThresholdingOutputNameRData = paste0(softThresholdPowerFilePath, "//softThresholdPowerDF_",netType, "_network_recommendedPower_",disease, "_", bodyRegion, outputAddOn, ".RData")
+
+
+filePathInfoDF = data.frame(c("geneToEntrezIDPathForGeneExpressionDataRData:"), c(geneToEntrezIDPathForGeneExpressionDataRData),
+                            c("RData"), c(paste0("Please note this contains information on the gene to the Entrez IDs mapping for ", folderName)))
+
+
+colnames(filePathInfoDF) = c("variableName", "filePath", "fileType", "description")
+
+
+# maybe also have a parameter for overall grouping?  such as soft-threshold power for WGCNA
+#if (includeTimeStamp == "TRUE"){
+  outputAddOnWithDate = paste0(outputAddOn, returnCurrentDateToFilePath())
+  updatedOutputAddOn_withDate = paste0(finalGeneExpressionPreparationFilePath, "//finalGeneExpressionDataExpr_",
+                                       disease, "_", bodyRegion, outputAddOnWithDate, ".csv" )
+
+  updatedOutputAddOnAndDatExpr_withDate = paste0(finalGeneExpressionPreparationFilePath, "//finalGeneExpressionDatExpr_",
+                                                 disease, "_", bodyRegion, outputAddOnWithDate, ".csv" )
+
+  geneExpressionOutputNameCSV_withDate = str_replace_all(updatedOutputAddOn_withDate, " ", "")
+geneExpressionOutputNameCSV_withDate = str_replace_all(geneExpressionOutputNameCSV_withDate,  " ", "")
+updatedOutputAddOnAndDatExpr_withDate = str_replace_all(updatedOutputAddOnAndDatExpr_withDate,  " ", "")
+geneExpressionOutputNameRData_withDate = str_replace_all(geneExpressionOutputNameCSV_withDate, ".csv", ".RData") #paste0("_", diseaseName, "_", bodyRegion, outputAddOn, ".RData")
+
+#}
+
+# please get rid of any possible spaces in the filePath
+inputGeneExpressionDataFilePath = str_replace_all(inputGeneExpressionDataFilePath,  " ", "")
+geneToEntrezIDPathForGeneExpressionDataCSV = str_replace_all(geneToEntrezIDPathForGeneExpressionDataCSV,  " ", "")
+geneToEntrezIDPathForGeneExpressionDataRData = str_replace_all(geneToEntrezIDPathForGeneExpressionDataRData,  " ", "")
+geneExpressionOutputNameCSV = str_replace_all(updatedOutputAddOn, " ", "")
+geneExpressionOutputNameRData = str_replace_all(geneExpressionOutputNameCSV, ".csv", ".RData") #paste0("_", diseaseName, "_", bodyRegion, outputAddOn, ".RData")
+
+geneExpressionOutputNameCSV = str_replace_all(geneExpressionOutputNameCSV,  " ", "")
+originalGeneFilteredCSV = str_replace_all(originalGeneFilteredCSV,  " ", "")
+originalGeneFilteredRData = str_replace_all(originalGeneFilteredRData,  " ", "")
+geneExpressionOutputNameRData = str_replace_all(geneExpressionOutputNameRData,  " ", "")
+updatedOutputAddOnAndDatExpr = str_replace_all(updatedOutputAddOnAndDatExpr,  " ", "")
+print(paste0("geneExpressionOutputNameCSV_withDate: ", geneExpressionOutputNameCSV_withDate))
+print(paste0("geneExpressionOutputNameRData_withDate: ", geneExpressionOutputNameRData_withDate))
+
+print(paste0("geneExpressionOutputNameCSV: ", geneExpressionOutputNameCSV))
+print(paste0("geneExpressionOutputNameRData: ", geneExpressionOutputNameRData))
+
+region = folderName
+regionName = folderName
+
+
+# file path for the Topological Overlap Matrix Info
+tomFilePath = paste0(wgcnaAndKMeansOutputPath, "//TopologicalOverlapMatrix")
+print(paste0("tomFilePath: ", tomFilePath))
+dir.create(tomFilePath, showWarnings = FALSE)
+
+
+initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA = paste0(mainOutputFolder, "//initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA.RData")
+
+
+# please note that we also save the data objects from WGCNA here so we can call them in future functions without needing to know the power :)
+wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName = paste0(mainOutputFolder, wgcnaToAdd, bodyRegion, "_wgcnaSimplePathALLKeyObjectsExceptTOM",outputAddOn,".RData")
+
+
+
+#if (includeTimeStamp == "TRUE"){		 
+save(fullDiseaseName, folderName, mainOutputFolder,
+region, regionName, tomFilePath,
+wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName,
+filePathInfoDF_FileNameRData,
+filePathInfoDF_FileNameCSV,
+tfsInGeneExpressionDataCSV,
+tfsInGeneExpressionDataRData,
+wgcnaAndKMeansOutputPath,
+wgcnaToAdd,
+adsnphenoDirectory,
+datTraitsRDataFilePath,
+powerRelatedFilePathsRData,
+geneExpressionPreparationFilePath,
+finalGeneExpressionPreparationFilePath,
+entrezMappingFilePath,
+softThresholdPowerFilePath,
+tomFilePath, wgcnaFilePath, wgcnaWithKMeansAfterFilePath,
+pathForWGCNA, MEsFilePath,
+moduleAssignmentsFilePath,
+geneModuleMembershipFilePath,
+allObjectsFilePath, phenotypeAssociationFilePath,
+modulePhenoAssociationFilePath,
+genePhenoAssociationFilePath,
+diseaseTraits, newDate, outputAddOn,
+dataScaling, dataScalingOutputMini,
+geneToEntrezIDPathForGeneExpressionDataRData,
+geneToEntrezIDPathForGeneExpressionDataCSV,
+originalGeneFilteredCSV,
+originalGeneFilteredRData,
+updatedOutputAddOn, filePathOfGeneExpressionDataUsedByWGCNA,
+updatedOutputAddOnAndDatExpr,
+sftThresholdingOutputNameCSV,
+sftThresholdingOutputNameRData,
+filePathInfoDF, inputGeneExpressionDataFilePath,
+geneExpressionOutputNameCSV_withDate,
+geneExpressionOutputNameCSV,
+geneExpressionOutputNameRData,
+updatedOutputAddOnAndDatExpr_withDate,
+geneExpressionOutputNameRData_withDate,
+outputAddOnWithDate, updatedOutputAddOn_withDate,
+updatedOutputAddOnAndDatExpr_withDate,
+geneExpressionOutputNameCSV_withDate,
+numberOfRoundingDigits, numOfRoundingDigits,
+file = initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA)
+#} else {
+#save(fullDiseaseName, folderName, mainOutputFolder,
+#region, regionName, tomFilePath,
+#wgcnaWithKmeansAllObjectsExceptTOM_SimpleFileName,
+#filePathInfoDF_FileNameRData,
+#filePathInfoDF_FileNameCSV,
+#tfsInGeneExpressionDataCSV,
+#tfsInGeneExpressionDataRData,
+#wgcnaAndKMeansOutputPath,
+#wgcnaToAdd,
+#adsnphenoDirectory,
+#datTraitsRDataFilePath,
+#powerRelatedFilePathsRData,
+#geneExpressionPreparationFilePath,
+#finalGeneExpressionPreparationFilePath,
+#entrezMappingFilePath,
+#softThresholdPowerFilePath,
+#tomFilePath, wgcnaFilePath,
+#wgcnaWithKMeansAfterFilePath,
+#pathForWGCNA, MEsFilePath,
+#moduleAssignmentsFilePath,
+#geneModuleMembershipFilePath,
+#allObjectsFilePath,
+#phenotypeAssociationFilePath,
+#modulePhenoAssociationFilePath,
+#genePhenoAssociationFilePath,
+#diseaseTraits, newDate, outputAddOn, dataScaling,
+#dataScalingOutputMini, geneToEntrezIDPathForGeneExpressionDataRData,
+#geneToEntrezIDPathForGeneExpressionDataCSV,
+#originalGeneFilteredCSV,
+#originalGeneFilteredRData, updatedOutputAddOn,
+#filePathOfGeneExpressionDataUsedByWGCNA,
+#updatedOutputAddOnAndDatExpr,
+#sftThresholdingOutputNameCSV,
+#sftThresholdingOutputNameRData,
+#filePathInfoDF, inputGeneExpressionDataFilePath,
+#geneExpressionOutputNameCSV,
+#geneExpressionOutputNameRData,
+#numberOfRoundingDigits, numOfRoundingDigits,
+#file = initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA)
+
+
+#}
+
+
+print(paste0(":) Please note that we wrote a lot of the key files for our WGCNA Gene Co-Expression Network Analysis to an RData File :)"))
+print(paste0("initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA:", initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA))
+return(initialRDataFilePath_FilePathDerivationsAndInfoObjectsForWGCNA)
+
+}
+
+
+
+pleaseRunSourceFilesFromDataAndCodeFolders <- function(dataFolder, codeFolder){
+print(paste0(":) Please note that this function takes in the dataFolder (", dataFolder, ") and the codeFolder (", codeFolder, 
+") and then loads generalDataForPipeline, Python Scripts, packages, and functions we need :)"))
+
+generalDataForPipeline = paste0(dataFolder, "generalDataForPipeline.RData")
+load(generalDataForPipeline)
+pathForPythonCode = paste0(codeFolder, "setupScripts//BuildingFullAndSubNetworksPythonCode.py")
+filePathDerivationsSourceCode = paste0(codeFolder, "setupScripts//filePathDerivations.R")
+packagesNeededSourceCode = paste0(codeFolder, "setupScripts//packagesNeeded.R")
+functionsNeededSourceCode = paste0(codeFolder, "setupScripts//functionsNeeded.R")
+userInputsSourceCode = paste0(codeFolder, "pythonCode//BuildingFullAndSubNetworksPythonCode.py")
+generalDataForPipeline = paste0(dataFolder, "generalDataForPipeline.RData")
+
+source(packagesNeededSourceCode)
+source(functionsNeededSourceCode)
+load(generalDataForPipeline)
+source(filePathDerivationsSourceCode)
+source_python(pathForPythonCode)
+
+print(paste0(":) Please note: packagesNeededSourceCode: ", packagesNeededSourceCode))
+print(paste0(":) Please note: functionsNeededSourceCode: ", functionsNeededSourceCode))
+print(paste0(":) Please note: generalDataForPipeline: ", generalDataForPipeline))
+print(paste0(":) Please note: filePathDerivationsSourceCode: ", filePathDerivationsSourceCode))
+print(paste0(":) Please note: pathForPythonCode: ", pathForPythonCode))
+
+fileNamesList = list()
+fileNamesList$packagesNeededSourceCode = packagesNeededSourceCode
+fileNamesList$functionsNeededSourceCode = functionsNeededSourceCode
+fileNamesList$generalDataForPipeline = generalDataForPipeline
+fileNamesList$filePathDerivationsSourceCode = filePathDerivationsSourceCode
+
+fileNamesList$pathForPythonCode = pathForPythonCode
+return(fileNamesList)
+
+}
+
+
+
+pleaseCreateModuleEnrichmentsFileNames <- function(regionName, pathForWGCNA, performMESHEnrichment, performMolSigDBEnrichment){
+print(paste0(":) Please note that this function creates file names and file paths for the Module Enrichments :)"))
+library(DOSE)
+library(meshes)
+library(MeSH.Hsa.eg.db)
+library(clusterProfiler)
+# "NeuroscienceProjectAxons"
+#regionName = folderName
+
+outputNamesList = list() # please create a list to return everything
+moduleEnrichmentsFilePath = paste0(pathForWGCNA, "//ModuleEnrichments")
+dir.create(moduleEnrichmentsFilePath, showWarnings = FALSE)
+outputNamesList$moduleEnrichmentsFilePath = moduleEnrichmentsFilePath
+
+
+#print(paste0(":) please note that there are ", length(keyModules), " gene modules that are associated with at least 1 of the phenotypes"))
+
+
+if (performMESHEnrichment){
+  print(paste0(":) Please note that since performMESHEnrichment is", performMESHEnrichment, " we are performing Medical Subject Enrichment Analysis! :)"))
+  meshEnrichmentsFilePath = paste0(moduleEnrichmentsFilePath, "//MeSH")
+  dir.create(meshEnrichmentsFilePath, showWarnings = FALSE)
+  outputNamesList$meshEnrichmentsFilePath = meshEnrichmentsFilePath
+
+}
+library(clusterProfiler)
+library(msigdbr)
+
+if(performMolSigDBEnrichment){
+  performMolSigDBEnrichment = TRUE
+
+  molSigDBEnrichmentsFilePath = paste0(moduleEnrichmentsFilePath, "//MolSigDB//")
+  dir.create(molSigDBEnrichmentsFilePath, showWarnings = FALSE)
+	outputNamesList$molSigDBEnrichmentsFilePath = molSigDBEnrichmentsFilePath
+
+}
+
+return(outputNamesList)
+
+
+
+}
+
+
+pleaseCreateSNPsMotifBreakrFileNames <- function(outputPathNameADSNPhenoOutputs, pValThreshForSNPs, disease, tissueName, bodyRegion){
+
+  print(paste0(":) Please note that this function creates file names and file paths for the SNP DF and the MotifBreakR Results :)"))
+
+  fullDiseaseName = paste0(disease, "Disease")
+  pValThreshForSNPs
+  folderName = str_replace_all(paste0(disease, "_", tissueName, "_", bodyRegion), " ", "")
+  dir.create(folderName)
+  print(paste0("outputPathNameADSNPhenoOutputs: ", outputPathNameADSNPhenoOutputs))
+
+  mainOutputFolder = paste0(
+    outputPathNameADSNPhenoOutputs, folderName)
+  dir.create(mainOutputFolder, showWarnings = FALSE)
+
+  print(paste0(":) Please note that a directory (folder) has been created here: ",
+               mainOutputFolder, " for all of the output of ADSNPheno"))
+
+
+
+
+
+  snpsOutputPath = paste0(mainOutputFolder, "//", "SNPs_Analysis")
+  dir.create(snpsOutputPath, showWarnings = FALSE)
+  filePathOfGWAS  = paste0(snpsOutputPath, "//", "GWAS_Data")
+  dir.create(filePathOfGWAS, showWarnings = FALSE)
+  filePathOfMotifBreakR_Step1  = paste0(snpsOutputPath, "//", "MotifbreakR_Part1//")
+  filePathOfMotifBreakR_Step2  = paste0(snpsOutputPath, "//", "MotifbreakR_Part2_BrokenTFBS//")
+  filePathOfMotifBreakR_Final  = paste0(snpsOutputPath, "//", "MotifbreakR_FinalResults//")
+
+  pValName = str_replace(pValThreshForSNPs, "-", "Minus")
+
+  updatedGWASDataSetFileNameALL_CSV = paste0(filePathOfGWAS, "//", "allGWAS_Data_", fullDiseaseName, "_SNPsWithPvalBelow_", pValName,".csv")
+  updatedGWASDataSetFileNameSNPandP_CSV = paste0(filePathOfGWAS, "//", "SNPsAndP_GWAS_", fullDiseaseName, "_SNPsWithPBelow_", pValName,".csv")
+  updatedGWASDataSetFileNameALL_RData = paste0(filePathOfGWAS, "//", "allGWAS_Data_", fullDiseaseName, "_SNPsWithPvalBelow_", pValName,".RData")
+  updatedGWASDataSetFileNameSNPandP_RData = paste0(filePathOfGWAS, "//", "SNPsAndP_GWAS_", fullDiseaseName, "_SNPsWithPBelow_", pValName,".RData")
+
+dir.create(filePathOfMotifBreakR_Step1)
+dir.create(filePathOfMotifBreakR_Step2)
+dir.create(filePathOfMotifBreakR_Final)
+
+
+snpDFPath = paste0(filePathOfMotifBreakR_Final, "motifbreakr_FinalResultsForSNPsWithP_", pValName,".csv")
+snpDFPathRData = paste0(filePathOfMotifBreakR_Final, "motifbreakr_FinalResultsForSNPsWithP_", pValName,".RData")
+
+  snpsOutputPathRDataObjects = paste0(snpsOutputPath, "//", "SNPs_Analysis_RDataObjectsFilePaths.RData")
+
+  save(fullDiseaseName, mainOutputFolder, snpsOutputPath, filePathOfGWAS, filePathOfMotifBreakR_Step1,
+       filePathOfMotifBreakR_Step2, filePathOfMotifBreakR_Final, pValName,
+       updatedGWASDataSetFileNameALL_CSV, updatedGWASDataSetFileNameSNPandP_CSV,
+       updatedGWASDataSetFileNameALL_RData, updatedGWASDataSetFileNameSNPandP_RData,
+	   snpDFPath, snpDFPathRData,
+       file = snpsOutputPathRDataObjects)
+
+  print(paste0(":) Please note that the SNPs and MotifbreakR file paths info (file path names) is stored here: ", snpsOutputPathRDataObjects))
+  return(snpsOutputPathRDataObjects)
+
+}
+
+
+
+pleaseCreateChromatinRegulatoryNetworkFileNames <- function(disease, tissueName, bodyRegion, outputPathNameADSNPhenoOutputs, haveEnhancersAndPromotersHICData){
+print(paste0(":) Please note that this function creates file names and file paths for the Chromatin (Promoter and Enhancer) Regulatory Network (Epigenomics) :)"))
+
+  fullDiseaseName = paste0(disease, "Disease")
+  folderName = str_replace_all(paste0(disease, "_", tissueName, "_", bodyRegion), " ", "")
+  dir.create(folderName)
+  print(paste0("outputPathNameADSNPhenoOutputs: ", outputPathNameADSNPhenoOutputs))
+
+  mainOutputFolder = paste0(
+    outputPathNameADSNPhenoOutputs, folderName)
+  dir.create(mainOutputFolder, showWarnings = FALSE)
+  
+  
+  
+  
+  
+
+# 5.  Please predict gene regulatory networks for genes and modules
+
+enhancerAndPromoterInteraction = paste0(mainOutputFolder, "//PromAndEnhInteractions//")
+dir.create(enhancerAndPromoterInteraction, showWarnings = FALSE)
+
+
+
+chromatinInteraction_Step2_FilePath = paste0(enhancerAndPromoterInteraction, "Chromatin_scgrnom_getTF_Step2//")
+chromatinInteraction_Step2_FilePath_InitialRDataObjects = paste0(enhancerAndPromoterInteraction, "Chromatin_scgrnom_getTF_Step2//getTF_InitialRData//")
+chromatinInteraction_Step2_FilePath_CleanedRDataObjects = paste0(enhancerAndPromoterInteraction, "Chromatin_scgrnom_getTF_Step2//getTF_FinalRData//")
+chromatinInteraction_Step2_FilePath_CleanedCSVObjects = paste0(enhancerAndPromoterInteraction, "Chromatin_scgrnom_getTF_Step2//getTF_finalCSVData//")
+
+
+dir.create(chromatinInteraction_Step2_FilePath)
+dir.create(chromatinInteraction_Step2_FilePath_InitialRDataObjects)
+dir.create(chromatinInteraction_Step2_FilePath_CleanedRDataObjects)
+dir.create(chromatinInteraction_Step2_FilePath_CleanedCSVObjects)
+
+chromatinInteractionFilesRData = paste0(enhancerAndPromoterInteraction, folderName,"_chromatinInteractionFilePathNames.RData") 
+
+if (haveEnhancersAndPromotersHICData){
+  chromatinInteraction_Step1_FilePath = paste0(enhancerAndPromoterInteraction, "Chromatin_scgrnom_Step1//")
+  dir.create(chromatinInteraction_Step1_FilePath)
+  
+  save(fullDiseaseName, mainOutputFolder, enhancerAndPromoterInteraction, folderName,
+chromatinInteraction_Step2_FilePath, 
+chromatinInteraction_Step2_FilePath_InitialRDataObjects, 
+chromatinInteraction_Step2_FilePath_CleanedRDataObjects,
+chromatinInteraction_Step2_FilePath_CleanedCSVObjects,
+chromatinInteraction_Step1_FilePath,
+file = chromatinInteractionFilesRData)
+} else { #if (haveEnhancersInteractionData}{
+  chromatinInteraction_Step1ADSNPheno_FilePath = paste0(enhancerAndPromoterInteraction, "Chromatin_adsnpheno_Step1//")
+  dir.create(chromatinInteraction_Step1ADSNPheno_FilePath)
+   save(fullDiseaseName, mainOutputFolder, enhancerAndPromoterInteraction, folderName,
+chromatinInteraction_Step2_FilePath, 
+chromatinInteraction_Step2_FilePath_InitialRDataObjects, 
+chromatinInteraction_Step2_FilePath_CleanedRDataObjects,
+chromatinInteraction_Step2_FilePath_CleanedCSVObjects,
+chromatinInteraction_Step1ADSNPheno_FilePath,
+file = chromatinInteractionFilesRData)
+  
+}
+
+
+print(paste0(":) Please note that the information on the Chromatin Interaction Regulatory Network File Path Names is stored in this RData Object: chromatinInteractionFilesRData = ", chromatinInteractionFilesRData))
+return(chromatinInteractionFilesRData)
+}

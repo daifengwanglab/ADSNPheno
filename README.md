@@ -68,14 +68,26 @@ Please visit our [lab website](https://daifengwanglab.org/) at the University of
 
 This demo applies our general, open-source computational pipeline, **ADSNPheno**, in the context of Alzheimer's disease (AD).  Here, we aim to reveal underlying gene regulatory mechanisms of AD risk variants to different AD phenotypes. Particularly, ADSNPheno first identifies the gene co-expression modules for various AD phenotypes via clustering gene co-expression networks. ADSNPheno further predicts the transcription factors (TFs) that significantly regulate the genes in each module, as well as the AD SNPs interrupting the TF binding sites on the regulatory elements. Finally, ADSNPheno constructs a full gene regulatory network linking SNPs, TFs, and regulatory elements to target genes for each phenotype. This network thus provides mechanistic insights of gene regulation from disease risk variants to the phenotype in AD.
 
-Please note that we provide an example application of ADNSPheno to the Lateral Temporal Lobe gene expression data set [GSE159699](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699).  For the demo, we randomly selected 200 genes from the gene expression data, and around 1,222 rows of Enhancer epigenomics data for the Lateral Temporal Lobe. 
+
+We provide a demo of our integrative analysis to the Lateral Temporal Lobe (LTL) region for predicting its gene regulatory network and linking SNPs to AD phenotypes. The gene expression data set and Enhancers data set are from [GSE159699](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699). For the demo, we randomly selected 200 genes from the gene expression data, and around 1,222 rows of Enhancer epigenomics data for the Lateral Temporal Lobe. Please see all codes for running this demo at [[link to inputsNeededByUser_DemoLTL.R]]. 
+
+In addition, all codes for our integrative analysis for general usage is provided in a single file [[link to adsnphenoCodesToRun.R]]. Also, we provide the codes for each step of our analysis as follows:
+
+*  Identifying gene co-expression modules and modular enrichments at [[link to file]]
+*  Predicting gene regulatory network linking TFs, regulatory elements to target genes at [[link to xxx. R]]
+*  Linking AD SNPs to interrupted TFBSs, target genes to phenotypes at [[link to file]]
+*  Differential expressions analysis of Covid-19 severity at [[link 
+*  Machine learning predicting Covid-19 severity from AD-Covid gene regulatory networks at [[link to xxx. R]]
+*  Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes at [link to xxx. R]]
+
+
+Please note that you can run the analysis for the entire Hippocampus Ca1 region (by running inputsNeededByUser_Hippo.R) and the entire Lateral Temporal Lobe region (by running inputsNeededByUser_LatTempLobe.R). Please ensure that you adjust the parameters (especially the file paths) so that you are able to run those files on your computer/server. The code for the Hippocampus Ca1 may take a couple days to run, as it is computationally intensive. 
 
 
 Tutorial
 -------
 
-Please note that a detailed Tutorial of this code will be available here: [ADSNPheno Book](https://saniyakhullar.github.io/SNPheno/).
-
+Please note that a detailed Tutorial of this code will be available soon.
 Please let us know if you have any questions!  Thank you!
 
 
