@@ -63,15 +63,14 @@ We provide a demo of our integrative analysis to the Lateral Temporal Lobe (LTL)
 
 ## Code for General Usage
 
-
-In addition, all codes for our integrative analysis for general usage is provided in a single file [adsnphenoCodesToRun.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/adsnphenoCodesToRun.R). Also, we provide the codes for each step of our analysis as follows:
+In addition, all codes for our integrative analysis for general usage is provided in a single file [adsnphenoCodesToRun.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/adsnphenoCodesToRun.R). Also, we provide the codes for each step of our analysis as follows (where you can edit the parameters directly within the file and then run the code below):
 
 *  [Identifying gene co-expression modules and modular enrichments](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Part1_Identifying%20Gene%20Co-Expression%20Modules%20and%20Module%20Enrichments)
 *  [Predicting gene regulatory network linking TFs, regulatory elements to target genes](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Part2_PredictingGeneRegulatoryNetworksLinkingTFsAndRegElementsToTarget%20Genes)
 *  [Linking AD SNPs to interrupted TFBSs, target genes to phenotypes](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Part3_LinkingSNPsToInterruptedTFBindingSitesAndDysregulatedTGsAndPhenotypes)
 *  [Differential expressions analysis of Covid-19 severity](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Covid19_Analysis/Part1_DifferentialExpressionAnalysis)
 *  [Machine learning predicting Covid-19 severity from AD-Covid gene regulatory networks](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Covid19_Analysis/Part2_MachineLearningPredictionOfCovid19SeverityFromADCovidGRNs) 
-*  Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes
+*  [Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Covid19_Analysis/Part3_DecisionCurveAnalysisForCovid19SeverityPredictions)
 
 
 You can run the analysis for the entire Hippocampus Ca1 region (by running [inputsNeededByUser_Hippo.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_Hippo.R)) and the entire Lateral Temporal Lobe region (by running [inputsNeededByUser_LatTempLobe.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_LatTempLobe.R)). Please ensure that you adjust the parameters (especially the file paths) so that you are able to run those files on your computer/server. The code for the Hippocampus Ca1 may take a couple days to run, as it is computationally intensive. 
