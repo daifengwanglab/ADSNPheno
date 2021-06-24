@@ -1,7 +1,7 @@
 README
 ================
 
-ADSNPheno: A computational pipeline of multi-omics analysis to predict gene regulatory networks from disease variants to phenotypes with applications in Alzheimer’s disease and SARS-CoV-2
+Integrative analysis of multi-omics reveals gene regulatory networks across brain regions from risk variants to phenotypes of Alzheimer's disease and Covid-19
 ===========================================================================================================================================================================================
 Paper
 -------
@@ -58,7 +58,7 @@ Please note that you can find more information on R packages that are needed und
 ## Support
 
 Please note that this code was developed by Saniya Khullar and Daifeng Wang, Ph.D.
-If you experience any issues with the code or steps in the pipeline, please reach out to Saniya Khullar at skhullar2@wisc.edu and she will be very happy to help you!
+If you experience any issues with the code or steps in the pipeline, please reach out to Daifeng Wang, Ph.D. at daifeng.wang@wisc.edu who will be very happy to help you!
 
 YouTube tutorials will also be available on ADSNPheno on [Saniya's YouTube channel](https://www.youtube.com/channel/UCNhVAcIdarXzTCWZ27N1EmQ) to guide you every step of the way. We also have presented our computational pipeline at an [ISCB-SC webinar](https://www.youtube.com/watch?v=ITwEzqhQnZU). 
 
