@@ -45,11 +45,29 @@ Please note that this integrative analysis is based on R 4.0 and Python. You wil
 Please note that you will need to have R installed as well as Python (Version 3.8.5 or above).  In Python, we will be installing packages such as numpy, pandas, math, datetime, sklearn, and fsspec. 
 Please note that you can find more information on R packages that are needed under [packages.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/setupScripts/packagesNeeded.R).  Please note that many of the R packages do require Bioconductor. 
 
+Please install the following main R packages prior to using ADSNPheno from an R terminal:
+```{r}
+c('plyr', 'dplyr', 'doRNG', 'reshape2', 'stringr','reticulate','hash', 'lubridate',
+  'rvest', 'ggplot2', 'glmnet', 'data.table','doParallel', 'foreach', 'Seurat', 'Rmagic')
+
+```
+We also need to install BiocManager so we can download packages from Bioconductor to run in R.  Please run this command to install BiocManager if this is your first time using it: 
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+```
+
+Then, please install these packages:
+```{r}
+BiocManager::install(c('JASPAR2018','S4Vectors', 'biomaRt','SNPlocs.Hsapiens.dbSNP142.GRCh37','GenomicRanges','TFBSTools','motifmatchr','GenomicFeatures','GenomeInfoDb','IRanges', 'aliases2entrez', 'biomaRt', 'GENIE3', 'GenomicInteractions', 'motifbreakR', 'rentrez', 'trena', 'WGCNA', 'clusterProfiler'
+'DOSE', 'meshes', 'MotifDb', 'msigdbr', 'RedeR', 'RTN', 'rvest', 'DESeq2',
+'TxDb.Hsapiens.UCSC.hg19.knownGene', 'MeSH.Hsa.eg.db', 'org.Hs.eg.db', 'BSgenome.Hsapiens.UCSC.hg19', 'SNPlocs.Hsapiens.dbSNP144.GRCh37'))
+```
 
 ## Support
 
 Please note that this code was developed by Saniya Khullar and Daifeng Wang, Ph.D.
-If you experience any issues with the code or steps in the pipeline, please reach out to Daifeng Wang, Ph.D. at daifeng.wang@wisc.edu for more assistance.
+If you experience any issues with the code or steps, please reach out to Daifeng Wang, Ph.D. at daifeng.wang@wisc.edu for more assistance.
 
 YouTube tutorials will also be available on ADSNPheno on [Saniya's YouTube channel](https://www.youtube.com/channel/UCNhVAcIdarXzTCWZ27N1EmQ) to guide you every step of the way. We also have presented our computational pipeline at an [ISCB-SC webinar](https://www.youtube.com/watch?v=ITwEzqhQnZU). 
 

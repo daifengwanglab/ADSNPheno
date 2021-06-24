@@ -27,12 +27,23 @@ library(msigdbr)
 library(RedeR)
 library(RTN)
 library(rvest)
-library(stringr)
-library(ggplot2)
+
+
+library('glmnet')
+library('data.table')
+library('dplyr')
+library('parallel')
+library('doParallel')
+library('foreach')
+library('Seurat')
+library('Rmagic')
+
+
+
 
 #library(EBSeq)
 library(DESeq2)
-library(edgeR)
+#library(edgeR)
 #library(DEFormats)
 #library(Rsubread)
 
