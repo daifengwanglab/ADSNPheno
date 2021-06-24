@@ -1750,7 +1750,7 @@ pleaseGetTFsFromPromoterAndInteractionDataStep2 <- function(interactionsDF, chro
                                                             chromatinInteraction_Step2_FilePath_InitialRDataObjects,
                                                             chromatinInteraction_Step2_FilePath_CleanedRDataObjects,
 															chromatinInteraction_Step2_FilePath_CleanedCSVObjects,
-															includeIndividualTFsInGroup, pleasePrintProgressAfterNumIterations_GetTF = 1000
+															includeIndividualTFsInGroup = includeTheIndividualTFsInGroup, pleasePrintProgressAfterNumIterations_GetTF = 1000
                                                             #includeIndividualTFsInGroup = includeTheIndividualTFsInGroup
                                                             ){
 

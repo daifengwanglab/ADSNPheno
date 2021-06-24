@@ -28,7 +28,7 @@ library(RedeR)
 library(RTN)
 library(rvest)
 library(stringr)
-
+library(ggplot2)
 
 #library(EBSeq)
 library(DESeq2)

@@ -19,10 +19,7 @@ mechanisms from disease variants to phenotypes.
 
 Method
 ------
-
-This integrative analysis aims to predict gene regulatory networks of AD
-risk Single-Nucleotide Polymorphisms (SNPs) to different AD phenotypes.
-In particular, we first cluster gene co-expression networks and
+This integrative analysis, named as ADSNPheno, aims to predict gene regulatory networks of AD risk Single-Nucleotide Polymorphisms (SNPs) to different AD phenotypes. In particular, we first cluster gene co-expression networks and
 identifies the gene modules for various AD phenotypes. Next, we further
 predict the transcription factors (TFs) that significantly regulate the
 genes in each module, as well as the AD SNPs interrupting the TF binding
@@ -32,7 +29,7 @@ elements to target genes for each phenotype. This network thus provides
 mechanistic insights of gene regulation from disease risk variants to AD
 phenotypes.
 
-Please note these steps in our integrative analysis:
+Please note these steps in our integrative analysis (that can be summarized as a pipeline):
 
 <p align="center">
   <img width="1500" src="adsnpheno.png">
@@ -52,18 +49,20 @@ Please note that you can find more information on R packages that are needed und
 ## Support
 
 Please note that this code was developed by Saniya Khullar and Daifeng Wang, Ph.D.
-If you experience any issues with the code or steps in the pipeline, please reach out to Daifeng Wang, Ph.D. at daifeng.wang@wisc.edu for more assistance!
+If you experience any issues with the code or steps in the pipeline, please reach out to Daifeng Wang, Ph.D. at daifeng.wang@wisc.edu for more assistance.
 
 YouTube tutorials will also be available on ADSNPheno on [Saniya's YouTube channel](https://www.youtube.com/channel/UCNhVAcIdarXzTCWZ27N1EmQ) to guide you every step of the way. We also have presented our computational pipeline at an [ISCB-SC webinar](https://www.youtube.com/watch?v=ITwEzqhQnZU). 
 
 Please visit our [lab website](https://daifengwanglab.org/) at the University of Wisconsin - Madison, to learn more about our team and our work! 
    
 ## Demo
-
-This demo applies our general, open-source computational pipeline, **ADSNPheno**, in the context of Alzheimer's disease (AD).  Here, we aim to reveal underlying gene regulatory mechanisms of AD risk variants to different AD phenotypes. Particularly, ADSNPheno first identifies the gene co-expression modules for various AD phenotypes via clustering gene co-expression networks. ADSNPheno further predicts the transcription factors (TFs) that significantly regulate the genes in each module, as well as the AD SNPs interrupting the TF binding sites on the regulatory elements. Finally, ADSNPheno constructs a full gene regulatory network linking SNPs, TFs, and regulatory elements to target genes for each phenotype. This network thus provides mechanistic insights of gene regulation from disease risk variants to the phenotype in AD.
+This demo applies our integrative analysis, ADSNPheno, in the context of Alzheimer's disease (AD).  Here, we aim to reveal underlying gene regulatory mechanisms of AD risk variants to different AD phenotypes. Particularly, ADSNPheno first identifies the gene co-expression modules for various AD phenotypes via clustering gene co-expression networks. ADSNPheno further predicts the transcription factors (TFs) that significantly regulate the genes in each module, as well as the AD SNPs interrupting the TF binding sites on the regulatory elements. Finally, ADSNPheno constructs a full gene regulatory network linking SNPs, TFs, and regulatory elements to target genes for each phenotype. This network thus provides mechanistic insights of gene regulation from disease risk variants to the phenotype in AD.
 
 
 We provide a demo of our integrative analysis to the Lateral Temporal Lobe (LTL) region for predicting its gene regulatory network and linking SNPs to AD phenotypes. The gene expression data set and Enhancers data set are from [GSE159699](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE159699). For the demo, we randomly selected 200 genes from the gene expression data, and around 1,222 rows of Enhancer epigenomics data for the Lateral Temporal Lobe. Please see all codes for running this demo at [inputsNeededByUser_DemoLTL.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_DemoLTL.R). 
+
+## Code for General Usage
+
 
 In addition, all codes for our integrative analysis for general usage is provided in a single file [adsnphenoCodesToRun.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/adsnphenoCodesToRun.R). Also, we provide the codes for each step of our analysis as follows:
 

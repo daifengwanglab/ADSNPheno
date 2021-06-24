@@ -80,7 +80,7 @@ netType = "signed"  # # network type:but please check WGCNA for additional param
 # Soft-Thresholding Power to be used:
 maxNumPowers = 50 # when selecting a Soft-Thresholding Power, what is the maximum Power, beta, that you want to consider?
 
-ourPower = NULL # if we have a recommended power in mind please put that there (this can come from analyzing the Soft-Thresholding Analysis results)
+ourPower = 47 # if we have a recommended power in mind please put that there (this can come from analyzing the Soft-Thresholding Analysis results)
 useRecommendedPower = "FALSE" #FALSE" # otherwise, please use the default that WGCNA selects
 
 
@@ -206,6 +206,7 @@ geneIDColumnNameEnhancerDF = "entrezID"
 numOfCoresToUseForScgrnom = 6
 
 
+
 #################################################################################################
 # Gene Regulatory Networks from Gene Expression Data:
 minNumSourcesGeneGRN = 2
@@ -232,6 +233,11 @@ useVarianceFilterToReduceCandidateTFsForTrenaToSpeedUpProcess = TRUE #FALSE  # i
 # https://bioconductor.org/packages/release/bioc/vignettes/trena/inst/doc/TReNA_Vignette.html: For instance, we can create a VarianceFilter and use it to find all transcription factors with variance within 50% of the target gene's variance. This will return a named list with both the names of the transcription factors and their variances.
 varianceSizeForTFsAndTargetGeneForTrena = 0.25# NULL # please note that if useVarianceFilterToReduceCandidateTFsForTrenaToSpeedUpProcess is TRUE, then this should be a number between 0 and 1
 
+includeTheIndividualTFsInGroup = TRUE  # should we also include the individual components of group TFs?  For example: should EWSR1-FLI1 TF be made into 3 elements (TRUE): EWSR1-FLI1, EWSR1, and FLI1?  Or, just left as 1 element (FALSE): EWSR1-FLI1?
+includeTheIndividualTFsInGroup_Python = "Yes"  # should we also include the individual components of group TFs?  For example: should EWSR1-FLI1 TF be made into 3 elements (TRUE): EWSR1-FLI1, EWSR1, and FLI1?  Or, just left as 1 element (FALSE): EWSR1-FLI1?
+
+enhancer_buffer_kbp = 10 # kilobase pairs to add to the enhancer on each side
+promoter_buffer_kbp = 2 # kilobase pairs to add to the promoter
 
 
 ########################################

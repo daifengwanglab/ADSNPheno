@@ -233,6 +233,13 @@ useVarianceFilterToReduceCandidateTFsForTrenaToSpeedUpProcess = TRUE #FALSE  # i
 varianceSizeForTFsAndTargetGeneForTrena = 0.25# NULL # please note that if useVarianceFilterToReduceCandidateTFsForTrenaToSpeedUpProcess is TRUE, then this should be a number between 0 and 1
 
 
+includeTheIndividualTFsInGroup = TRUE  # should we also include the individual components of group TFs?  For example: should EWSR1-FLI1 TF be made into 3 elements (TRUE): EWSR1-FLI1, EWSR1, and FLI1?  Or, just left as 1 element (FALSE): EWSR1-FLI1?
+includeTheIndividualTFsInGroup_Python = "Yes"  # should we also include the individual components of group TFs?  For example: should EWSR1-FLI1 TF be made into 3 elements (TRUE): EWSR1-FLI1, EWSR1, and FLI1?  Or, just left as 1 element (FALSE): EWSR1-FLI1?
+
+enhancer_buffer_kbp = 10 # kilobase pairs to add to the enhancer on each side
+promoter_buffer_kbp = 2 # kilobase pairs to add to the promoter
+
+
 
 ########################################
 # Single Nucleotide Polymorphisms (SNPs)

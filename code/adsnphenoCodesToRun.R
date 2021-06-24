@@ -745,7 +745,7 @@ finalGRN = pleaseGetOrganizedFinalGeneRegulatoryNetwork(geneAssignmentsModAssign
                                                         powerEstimate,
                                                         progressBarPythonIterations,
                                                         hasFinalFullNetworkForChromosome,
-                                                        filePathForFullNetwork)  #
+                                                        filePathForFullNetwork)  
 
 finalGRN
 combinedSubsForAllChromsDF

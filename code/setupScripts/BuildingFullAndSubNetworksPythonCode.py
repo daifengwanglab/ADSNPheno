@@ -418,7 +418,7 @@ def pleaseGetFinalFullNetworkDFForAllChromosomes(parentName, disease, bodyRegion
         chromName = chromeNameList[i]
         print(":) i = ", i, " and chromosome is: ", chromName, " and we are getting FinalFullNetworkForThisGene")
         outputName = pleaseGetOutputNameForFinalFullNetwork(chromName, parentName, disease, bodyRegion, dataScalingOutputMini, minNumSourcesGeneGRN)
-        
+        scgrnomOutputFileName = chromatinRegNetFileNameList[i]
         try:
             miniDF = pd.read_csv(outputName)
         except:
@@ -1056,7 +1056,7 @@ def pleaseGetOrganizedFinalGeneRegulatoryNetwork(geneAssignmentsModAssignmentsPh
         finalGRN
         finalGRN.to_csv(filePathForFullNetwork)
     finalGRN.to_csv(finalFullNetworkChromatinAndGeneExpressCSV)
-    print(":) Please note we output the final full network (gene regulatory network based on Gene Expression and Chromatin Data) file here: geneAssignmentsModAssignmentsPhenosWithKmeansOutputNameCSV = ", geneAssignmentsModAssignmentsPhenosWithKmeansOutputNameCSV)
+    print(":) Please note we output the final full network (gene regulatory network based on Gene Expression and Chromatin Data) file here: finalFullNetworkChromatinAndGeneExpressCSV = ", finalFullNetworkChromatinAndGeneExpressCSV)
     print(finalGRN.shape)
     print(finalGRN.head())
     return finalGRN
