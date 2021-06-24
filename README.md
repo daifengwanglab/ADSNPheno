@@ -3,12 +3,6 @@ README
 
 Integrative analysis of multi-omics reveals gene regulatory networks across brain regions from risk variants to phenotypes of Alzheimer's disease and Covid-19
 ===========================================================================================================================================================================================
-Paper
--------
-
-Please note that this code corresponds to this current pre-print, available on Biorxiv: [Integrative analysis of multi-omics reveals gene regulatory networks across brain regions from risk variants to phenotypes of Alzheimer's disease and Covid-19](https://www.biorxiv.org/content/10.1101/2021.06.21.449165v1.full.pdf+html)
-by Saniya Khullar and Daifeng Wang, Ph.D.
-
 
 Summary
 -------
