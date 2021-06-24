@@ -73,15 +73,15 @@ We provide a demo of our integrative analysis to the Lateral Temporal Lobe (LTL)
 
 In addition, all codes for our integrative analysis for general usage is provided in a single file [[link to adsnphenoCodesToRun.R]]. Also, we provide the codes for each step of our analysis as follows:
 
-*  Identifying gene co-expression modules and modular enrichments at [[link to file]]
-*  Predicting gene regulatory network linking TFs, regulatory elements to target genes at [[link to xxx. R]]
-*  Linking AD SNPs to interrupted TFBSs, target genes to phenotypes at [[link to file]]
-*  Differential expressions analysis of Covid-19 severity at [[link 
-*  Machine learning predicting Covid-19 severity from AD-Covid gene regulatory networks at [[link to xxx. R]]
-*  Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes at [link to xxx. R]]
+*  Identifying gene co-expression modules and modular enrichments
+*  Predicting gene regulatory network linking TFs, regulatory elements to target genes
+*  Linking AD SNPs to interrupted TFBSs, target genes to phenotypes
+*  Differential expressions analysis of Covid-19 severity 
+*  Machine learning predicting Covid-19 severity from AD-Covid gene regulatory networks 
+*  Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes
 
 
-Please note that you can run the analysis for the entire Hippocampus Ca1 region (by running inputsNeededByUser_Hippo.R) and the entire Lateral Temporal Lobe region (by running inputsNeededByUser_LatTempLobe.R). Please ensure that you adjust the parameters (especially the file paths) so that you are able to run those files on your computer/server. The code for the Hippocampus Ca1 may take a couple days to run, as it is computationally intensive. 
+You can run the analysis for the entire Hippocampus Ca1 region (by running inputsNeededByUser_Hippo.R) and the entire Lateral Temporal Lobe region (by running inputsNeededByUser_LatTempLobe.R). Please ensure that you adjust the parameters (especially the file paths) so that you are able to run those files on your computer/server. The code for the Hippocampus Ca1 may take a couple days to run, as it is computationally intensive. 
 
 
 Tutorial
