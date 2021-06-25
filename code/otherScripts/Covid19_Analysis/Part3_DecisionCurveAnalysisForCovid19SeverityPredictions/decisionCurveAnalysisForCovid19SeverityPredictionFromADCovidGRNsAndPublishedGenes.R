@@ -222,6 +222,10 @@ data.set$predlow = predict(model, type="response")
 dca(data=data.set, outcome="low", predictors="predlow", smooth="TRUE", xstop=0.50)
 
 #
+
+
+
+
 df = read.csv("F://updatedPredDF_Covid_SVC_LTL_4Fold.csv", header = TRUE)
 df$Region[1]
 dfCol = grep("CovidICU.1.", colnames(df))

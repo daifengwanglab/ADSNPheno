@@ -66,13 +66,13 @@ BiocManager::install(c('JASPAR2018','S4Vectors', 'biomaRt','SNPlocs.Hsapiens.dbS
 
 We will be calling a Python script [BuildingFullAndSubNetworksPythonCode.py](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/setupScripts/BuildingFullAndSubNetworksPythonCode.py) from R itself, using the [reticulate](https://rstudio.github.io/reticulate/) package.  Please note we used Python version 3.8.5 for our code.  In [packages.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/setupScripts/packagesNeeded.R), we create a [virtual environment](https://docs.python.org/3/tutorial/venv.html) (that we call "r-reticulate") where we download these 3 packages in python version 3.8.5:  [scipy](https://www.scipy.org/), [pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), [datetime](https://docs.python.org/3/library/datetime.html) and [fsspec](https://filesystem-spec.readthedocs.io/en/latest/).  
 
-For our Covid-19 Severity Machine Learning task, we will use ipython notebooks like [AD-Covid GRN for LTL.ipynb](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/otherScripts/Covid19_Analysis/Part2_MachineLearningPredictionOfCovid19SeverityFromADCovidGRNs/AD-Covid%20GRN%20for%20LTL.ipynb) and you will need to have sklearn, scipy, and matplotlib [installed on your computer](https://packaging.python.org/tutorials/installing-packages/) by typing in each of the following commands on terminal or command line:
+For our Covid-19 Severity Machine Learning task, we will use ipython notebooks like [AD-Covid GRN for LTL.ipynb](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/otherScripts/Covid19_Analysis/Part2_MachineLearningPredictionOfCovid19SeverityFromADCovidGRNs/AD-Covid%20GRN%20for%20LTL.ipynb) and you will need to have sklearn, scipy, matplotlib, and seaborn (optional, but for visualizing confusion matrix) [installed on your computer](https://packaging.python.org/tutorials/installing-packages/) by typing in each of the following commands on terminal or command line:
 
 ```{r}
 pip install sklearn
 pip install scipy
 pip install matplotlib
-
+pip install seaborn
 ```
 
 ## Support
