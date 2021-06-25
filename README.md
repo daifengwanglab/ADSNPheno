@@ -102,7 +102,7 @@ In addition, all codes for our integrative analysis for general usage is provide
 *  [Decision curve analysis for Covid-19 severity using AD-Covid genes and benchmarking genes](https://github.com/daifengwanglab/ADSNPheno/tree/master/code/otherScripts/Covid19_Analysis/Part3_DecisionCurveAnalysisForCovid19SeverityPredictions)
 
 
-You can run the analysis for the entire Hippocampus Ca1 region (by running [inputsNeededByUser_Hippo.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_Hippo.R)) and the entire Lateral Temporal Lobe region (by running [inputsNeededByUser_LatTempLobe.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_LatTempLobe.R)). Please ensure that you adjust the parameters (especially the file paths) so that you are able to run those files on your computer/server. The code for the Hippocampus Ca1 may take a couple days to run, as it is computationally intensive. 
+You can run the analysis for the entire Hippocampus Ca1 region (by running [inputsNeededByUser_Hippo.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_Hippo.R)) and the entire Lateral Temporal Lobe region (by running [inputsNeededByUser_LatTempLobe.R](https://github.com/daifengwanglab/ADSNPheno/blob/master/code/userInputs/inputsNeededByUser_LatTempLobe.R)). Please ensure that you adjust the parameters (especially the file paths) so that you are able to run those files on your computer/server. 
 
 
 Tutorial
